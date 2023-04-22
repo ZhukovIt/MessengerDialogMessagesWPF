@@ -368,15 +368,19 @@ namespace MessengerDialogMessagesWPF
             return _ResultControl;
         }
         //--------------------------------------------------------------
-        private Image CreateClientImage(byte[] _ImageBytes)
+        private Ellipse CreateClientImageInEllipse(byte[] _ImageBytes)
         {
-            Image _ResultControl = new Image();
+            Ellipse _ResultControl = new Ellipse();
 
             _ResultControl.VerticalAlignment = VerticalAlignment.Top;
 
             _ResultControl.Width = 48;
 
             _ResultControl.Height = 48;
+
+            _ResultControl.Margin = new Thickness(5, 0, 0, 0);
+
+            ImageBrush _ImageBrush = new ImageBrush();
 
             MemoryStream stream = new MemoryStream(_ImageBytes);
 
@@ -388,7 +392,9 @@ namespace MessengerDialogMessagesWPF
 
             imageSource.EndInit();
 
-            _ResultControl.Source = imageSource;
+            _ImageBrush.ImageSource = imageSource;
+
+            _ResultControl.Fill = _ImageBrush;
 
             return _ResultControl;
         }
@@ -478,11 +484,11 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.Orientation = Orientation.Horizontal;
 
-            Image _ClientImage = CreateClientImage(_Messages[0].ClientPhoto);
+            Ellipse _ClientImageInEllipse = CreateClientImageInEllipse(_Messages[0].ClientPhoto);
 
             if (_MessageTypeWPF == MessageTypeWPF.Income)
             {
-                _ResultControl.Children.Add(_ClientImage);
+                _ResultControl.Children.Add(_ClientImageInEllipse);
 
                 _ResultControl.Children.Add(CreateMessageOutgoingStackPanel(_MessageTypeWPF, _Messages));
             }

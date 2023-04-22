@@ -66,7 +66,11 @@
             <TextBox x:Name="Mytb" Template="{StaticResource tBoxDateTemplate}">04 апреля 2023 года</TextBox>
 
             <StackPanel Orientation="Horizontal">
-                <Image VerticalAlignment="Top" Width="48" Height="48" Source="C:\Users\SM11\Desktop\FirstProject\Source\Clinic\Resource\businessman48.png"></Image>
+                <Ellipse Width="48" Height="48" VerticalAlignment="Top" Margin="5, 0, 0, 0">
+                    <Ellipse.Fill>
+                    <ImageBrush ImageSource="C:\Users\SM11\Desktop\Справки образец\003_Вторая страница2.jpg"></ImageBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <StackPanel Orientation="Vertical" MaxWidth="600">
                     <TextBox HorizontalAlignment="Left" Template="{StaticResource tBoxUserClientNameTemplate}" Margin="5, 5, 0, 0">Виктор Жуков</TextBox>
 
