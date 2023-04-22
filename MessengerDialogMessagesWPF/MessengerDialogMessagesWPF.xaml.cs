@@ -94,10 +94,12 @@ namespace MessengerDialogMessagesWPF
                     {
                         if (messages.Count > 0)
                         {
-                            spMessages.Children.Add(CreateMessageMainStackPanel((MessageTypeWPF)currentMessageType, messages));
+                            spMessages.Children.Add(CreateMessageMainStackPanel((MessageTypeWPF)lastMessageType, messages));
                         }
 
                         messages.Clear();
+
+                        messages.Add(message);
                     }
 
                     lastMessageType = message.MessageTypeWPF;
