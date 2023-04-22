@@ -340,6 +340,8 @@ namespace MessengerDialogMessagesWPF
 
             _FileNameTextBlock.FontFamily = new FontFamily("Times New Roman");
 
+            _FileNameTextBlock.Margin = new Thickness(0, 0, 10, 0);
+
             Hyperlink hyperlink = new Hyperlink();
 
             string linkFullName = _Attachment.Name + "." + _Attachment.Type;
