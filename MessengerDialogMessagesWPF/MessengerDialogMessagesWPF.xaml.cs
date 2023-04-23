@@ -312,8 +312,6 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.HorizontalAlignment = HorizontalAlignment.Left;
 
-            _ResultControl.Cursor = Cursors.Hand;
-
             Image _FileImage = new Image();
 
             byte[] imageFileType = m_GetBytesForFileType.Invoke(_Attachment.Type);
@@ -334,6 +332,8 @@ namespace MessengerDialogMessagesWPF
 
             _FileImage.Height = 32;
 
+            _FileImage.Margin = new Thickness(10, 0, 0, 0);
+
             TextBlock _FileNameTextBlock = new TextBlock();
 
             _FileNameTextBlock.VerticalAlignment = VerticalAlignment.Center;
@@ -344,22 +344,29 @@ namespace MessengerDialogMessagesWPF
 
             _FileNameTextBlock.Margin = new Thickness(0, 0, 10, 0);
 
-            Hyperlink hyperlink = new Hyperlink();
+            string fileFullName = _Attachment.Name + "." + _Attachment.Type;
 
-            string linkFullName = _Attachment.Name + "." + _Attachment.Type;
-
-            hyperlink.Inlines.Add(linkFullName);
-
-            if (!m_HyperLinksDict.ContainsKey(linkFullName))
+            if (!string.IsNullOrEmpty(_Attachment.Data?.Trim()))
             {
-                m_HyperLinksDict.Add(linkFullName, _Attachment.Data);
+                _ResultControl.Cursor = Cursors.Hand;
+
+                Hyperlink hyperlink = new Hyperlink();
+
+                hyperlink.Inlines.Add(fileFullName);
+
+                if (!m_HyperLinksDict.ContainsKey(fileFullName))
+                {
+                    m_HyperLinksDict.Add(fileFullName, _Attachment.Data);
+                }
+
+                hyperlink.Click += HyperLink_Click;
+
+                _FileNameTextBlock.Inlines.Add(hyperlink);
             }
-
-            hyperlink.Click += HyperLink_Click;
-
-            _FileNameTextBlock.Inlines.Add(hyperlink);
-
-            _FileImage.Margin = new Thickness(10, 0, 0, 0);
+            else
+            {
+                _FileNameTextBlock.Text = $"Файл {fileFullName} отправлен";
+            }
 
             _ResultControl.Children.Add(_FileImage);
 
