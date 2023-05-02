@@ -21,17 +21,20 @@ namespace MessengerDialogMessagesWPF
     {
         private Action<byte[]> m_ShowImage;
         private Func<string, byte[]> m_GetBytesForFileType;
+        private Action m_SetStateMessageToReaded;
         private double m_FactWidth;
         private double m_FactHeight;
         private Dictionary<string, string> m_HyperLinksDict;
         //--------------------------------------------------------------
-        public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, double _FactWidth, double _FactHeight)
+        public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, Action _SetStateMessageToReaded, double _FactWidth, double _FactHeight)
         {
             InitializeComponent();
 
             m_ShowImage = _ShowImage;
 
             m_GetBytesForFileType = _GetBytesForFileType;
+
+            m_SetStateMessageToReaded = _SetStateMessageToReaded;
 
             m_FactWidth = _FactWidth;
 
@@ -63,6 +66,11 @@ namespace MessengerDialogMessagesWPF
                 }
 
                 GroupMessagesFromDepartureDate(item.ToList());
+
+                if (item.Key)
+                {
+                    spMessages.Children.Add(CreateButtonCheckMessages());
+                }
             }
         }
         //--------------------------------------------------------------
@@ -569,6 +577,21 @@ namespace MessengerDialogMessagesWPF
             return _ResultControl;
         }
         //--------------------------------------------------------------
+        private Button CreateButtonCheckMessages()
+        {
+            Button _ResultControl = new Button();
+
+            _ResultControl.Template = (ControlTemplate)Resources["btnCheckMessages"];
+
+            _ResultControl.Content = "Отметить сообщения как прочитанные";
+
+            _ResultControl.Cursor = Cursors.Hand;
+
+            _ResultControl.Click += new RoutedEventHandler(btnCheckMessages_Click);
+
+            return _ResultControl;
+        }
+        //--------------------------------------------------------------
         private bool IsShowAttachmentFromFileType(string _FileType)
         {
             switch (_FileType)
@@ -608,6 +631,11 @@ namespace MessengerDialogMessagesWPF
             ];
 
             Process.Start(hyperlinkText);
+        }
+        //--------------------------------------------------------------
+        private void btnCheckMessages_Click(object sender, RoutedEventArgs e)
+        {
+            m_SetStateMessageToReaded.Invoke();
         }
         //--------------------------------------------------------------
         #endregion

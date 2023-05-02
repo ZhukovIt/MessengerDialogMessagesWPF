@@ -20,6 +20,12 @@
             <Setter Property="Margin" Value="0, 0, 0, -15" />
         </Style>
 
+        <ControlTemplate TargetType="Button" x:Key="btnCheckMessages">
+            <Border CornerRadius="11" BorderThickness="2" BorderBrush="Black" Background="White" Width="300" Height="auto">
+                <ContentControl Margin="0, 5, 0, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman" Content="{TemplateBinding Content}"></ContentControl>
+            </Border>
+        </ControlTemplate>
+
         <ControlTemplate TargetType="TextBox" x:Key="tBoxDateTemplate">
             <Border CornerRadius="12" BorderBrush="#dbdbdb" Background="#f0eded" Height="28" Width="150" Margin="10">
                 <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Text}" FontSize="14" FontFamily="Times New Roman"></ContentControl>
@@ -63,7 +69,7 @@
 
     <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Padding="0, 0, 0, 10">
         <StackPanel x:Name="spMessages" Orientation="Vertical">
-
+            
         </StackPanel>
     </ScrollViewer>
 
