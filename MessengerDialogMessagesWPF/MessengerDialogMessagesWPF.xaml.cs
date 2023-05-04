@@ -128,6 +128,8 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.Template = (ControlTemplate)Resources["tBoxDateTemplate"];
 
+            _ResultControl.IsReadOnly = true;
+
             return _ResultControl;
         }
         //--------------------------------------------------------------
@@ -150,6 +152,8 @@ namespace MessengerDialogMessagesWPF
                 _ResultControl.Text = $"{_DepartureTime}  ({_DepartureDate})";
             }
 
+            _ResultControl.IsReadOnly = true;
+
             return _ResultControl;
         }
         //--------------------------------------------------------------
@@ -171,6 +175,8 @@ namespace MessengerDialogMessagesWPF
             }
 
             _ResultControl.Text = _MessageSourceView;
+
+            _ResultControl.IsReadOnly = true;
 
             return _ResultControl;
         }
@@ -195,6 +201,8 @@ namespace MessengerDialogMessagesWPF
             }
 
             _ResultControl.Text = _CompanionName;
+
+            _ResultControl.IsReadOnly = true;
 
             return _ResultControl;
         }
