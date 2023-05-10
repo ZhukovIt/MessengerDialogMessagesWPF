@@ -9,6 +9,8 @@ namespace MessengerDialogMessagesWPF
 {
     public sealed class MessengerDialogMessage
     {
+        public int Id { get; set; }
+
         public string TextMessage { get; set; }
 
         public string DepartureDate { get; set; }

@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Windows.Documents;
+using System.Collections;
 
 namespace MessengerDialogMessagesWPF
 {
@@ -25,6 +26,8 @@ namespace MessengerDialogMessagesWPF
         private double m_FactWidth;
         private double m_FactHeight;
         private Dictionary<string, string> m_HyperLinksDict;
+        private int m_MaxIndexIncomeSP;
+        private int m_MaxIndexOutgoingSP;
         //--------------------------------------------------------------
         public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, Action _SetStateMessageToReaded, double _FactWidth, double _FactHeight)
         {
@@ -42,17 +45,141 @@ namespace MessengerDialogMessagesWPF
 
             m_HyperLinksDict = new Dictionary<string, string>();
 
+            m_MaxIndexIncomeSP = 0;
+
+            m_MaxIndexOutgoingSP = 0;
+
             GroupMessagesFromIsNewState(_Messages);
 
             MainScrollViewer.ScrollToEnd();
         }
         //--------------------------------------------------------------
-        public void AddNewMessage(MessengerDialogMessage _Message)
+        public void AddMessage(MessengerDialogMessage _Message)
         {
-            //spMessages.Children.Add(CreateMessageMainStackPanel(_Message));
+            bool NeedRenderNewMessagesElements = !HasNewMessagesGrid(spMessages.Children);
+            MessageTypeWPF _MessageTypeWPF = _Message.MessageTypeWPF;
+
+            if (NeedRenderNewMessagesElements)
+            {
+                spMessages.Children.Add(CreateNewMessagesGrid());
+
+                spMessages.Children.Add(CreateDepartureDateTextBox(_Message.DepartureDate));
+
+                spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
+            }
+            else
+            {
+                string _KeyToFind;
+
+                if (_Message.MessageTypeWPF == MessageTypeWPF.Income)
+                {
+                    _KeyToFind = "IncomeMessageOutgoingSP" + m_MaxIndexIncomeSP.ToString();
+                }
+                else
+                {
+                    _KeyToFind = "OutgoingMessageOutgoingSP" + m_MaxIndexOutgoingSP.ToString();
+                }
+
+                FrameworkElement findElement = FindFrameworkElementFromKey(spMessages, _KeyToFind);
+
+                if (findElement == null)
+                {
+                    spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
+                }
+                else
+                {
+                    StackPanel findSP = (StackPanel)findElement;
+
+                    FrameworkElement tempRemovedElement = null;
+
+                    foreach (FrameworkElement element in findSP.Children)
+                    {
+                        if (element.Name.StartsWith("MessageSourceTextBoxIncome") || element.Name.StartsWith("MessageSourceTextBoxOutgoing"))
+                        {
+                            tempRemovedElement = element;
+                            break;
+                        }
+                    }
+
+                    findSP.Children.Remove(tempRemovedElement);
+
+                    findSP.Children.Add(CreateMessageFieldStackPanelInBorder(_MessageTypeWPF, _Message));
+
+                    tempRemovedElement.Margin = new Thickness(tempRemovedElement.Margin.Left, tempRemovedElement.Margin.Top + 5,
+                        tempRemovedElement.Margin.Right, tempRemovedElement.Margin.Bottom);
+
+                    findSP.Children.Add(tempRemovedElement);
+                }
+            }
+
+            if (NeedRenderNewMessagesElements)
+            {
+                spMessages.Children.Add(CreateButtonCheckMessages());
+            }
+
+            MainScrollViewer.ScrollToEnd();
+        }
+        //--------------------------------------------------------------
+        public void UpdateMessage(int _MessengerDialogMessageId)
+        {
+            StackPanel findSP = (StackPanel)FindFrameworkElementFromKey(spMessages, $"Message{_MessengerDialogMessageId}");
+
+            if (findSP == null)
+            {
+                throw new NotImplementedException("Проверьте есть ли среди сообщений нужное с правильным Id!");
+            }
         }
         //--------------------------------------------------------------
         #region Вспомогательные закрытые методы и атрибуты
+        //--------------------------------------------------------------
+        private bool HasNewMessagesGrid(IEnumerable elements)
+        {
+            foreach (FrameworkElement element in elements)
+            {
+                if (element.Name == "NewMessagesGrid")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        //--------------------------------------------------------------
+        private FrameworkElement FindFrameworkElementFromKey(Panel _Parent, string _Key)
+        {
+            FrameworkElement findFrameworkElement;
+
+            foreach (FrameworkElement element in _Parent.Children)
+            {
+                findFrameworkElement = HandleElementForFindFrameworkElement(element, _Key);
+
+                if (findFrameworkElement.Name == _Key)
+                {
+                    return findFrameworkElement;
+                }
+            }
+
+            return null;
+        }
+        //--------------------------------------------------------------
+        private FrameworkElement HandleElementForFindFrameworkElement(FrameworkElement element, string _Key)
+        {
+            if (element is Border)
+            {
+                return HandleElementForFindFrameworkElement((FrameworkElement)(element as Border).Child, _Key);
+            }
+            else if (element is Panel)
+            {
+                FrameworkElement findElement = FindFrameworkElementFromKey(element as Panel, _Key);
+
+                if (findElement != null)
+                {
+                    return findElement;
+                }
+            }
+
+            return element;
+        }
         //--------------------------------------------------------------
         private void GroupMessagesFromIsNewState(IEnumerable<MessengerDialogMessage> _Messages)
         {
@@ -161,18 +288,26 @@ namespace MessengerDialogMessagesWPF
         {
             TextBox _ResultControl = new TextBox();
 
+            string _Name = "";
+
             _ResultControl.Template = (ControlTemplate)Resources["tBoxMessageSourceTemplate"];
 
             if (_MessageTypeWPF == MessageTypeWPF.Income)
             {
                 _ResultControl.Margin = new Thickness(5, 0, 0, 0);
+
+                _Name = $"MessageSourceTextBoxIncome{m_MaxIndexIncomeSP}";
             }
             else if (_MessageTypeWPF == MessageTypeWPF.Outgoing)
             {
                 _ResultControl.HorizontalAlignment = HorizontalAlignment.Right;
 
                 _ResultControl.Margin = new Thickness(0, 0, 5, 0);
+
+                _Name = $"MessageSourceTextBoxOutgoing{m_MaxIndexOutgoingSP}";
             }
+
+            _ResultControl.Name = _Name;
 
             _ResultControl.Text = _MessageSourceView;
 
@@ -210,6 +345,8 @@ namespace MessengerDialogMessagesWPF
         private StackPanel CreateMessageFieldStackPanel(MessageTypeWPF _MessageTypeWPF, MessengerDialogMessage _Message)
         {
             StackPanel _ResultControl = new StackPanel();
+
+            _ResultControl.Name = $"Message{_Message.Id}";
 
             _ResultControl.Orientation = Orientation.Vertical;
 
@@ -466,17 +603,24 @@ namespace MessengerDialogMessagesWPF
             TextBox _CompanionNameTextBox = null;
             TextBox _MessageSourceTextBox = null;
 
+            string _Name = "";
+
             if (_MessageTypeWPF == MessageTypeWPF.Income)
             {
+                m_MaxIndexIncomeSP++;
+                _Name = $"IncomeMessageOutgoingSP{m_MaxIndexIncomeSP}";
                 _CompanionNameTextBox = CreateCompanionNameTextBox(_MessageTypeWPF, _Messages[0].ClientName);
                 _MessageSourceTextBox = CreateMessageSourceTextBox(_MessageTypeWPF, _Messages[0].MessageSourceClientView);
-
             }
             else if (_MessageTypeWPF == MessageTypeWPF.Outgoing)
             {
+                m_MaxIndexOutgoingSP++;
+                _Name = $"OutgoingMessageOutgoingSP{m_MaxIndexOutgoingSP}";
                 _CompanionNameTextBox = CreateCompanionNameTextBox(_MessageTypeWPF, _Messages[0].UserName);
                 _MessageSourceTextBox = CreateMessageSourceTextBox(_MessageTypeWPF, _Messages[0].MessageSourceUserView);
             }
+
+            _ResultControl.Name = _Name;
 
             for (int i = 0; i < _Messages.Count; i++)
             {
@@ -528,6 +672,8 @@ namespace MessengerDialogMessagesWPF
         private Grid CreateNewMessagesGrid()
         {
             Grid _ResultControl = new Grid();
+
+            _ResultControl.Name = "NewMessagesGrid";
 
             ColumnDefinition column1 = new ColumnDefinition();
             column1.Width = new GridLength(100, GridUnitType.Auto);
@@ -582,7 +728,32 @@ namespace MessengerDialogMessagesWPF
             _ResultControl.Children.Add(textElement);
             _ResultControl.Children.Add(rightLine);
 
+            _ResultControl.SizeChanged += NewMessagesGrid_SizeChanged;
+
             return _ResultControl;
+        }
+        //--------------------------------------------------------------
+        private void NewMessagesGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Grid _Grid = (Grid)sender;
+
+            Line _Left = (Line)_Grid.Children[0];
+            Line _Right = (Line)_Grid.Children[2];
+
+            if (e.PreviousSize.Width == 0)
+            {
+                double correctWidth = (e.NewSize.Width - 113) / 2;
+
+                _Left.X2 = correctWidth;
+                _Right.X2 = correctWidth + 5;
+            }
+            else
+            {
+                double dWidth = (e.NewSize.Width - e.PreviousSize.Width) / 2;
+
+                _Left.X2 += dWidth;
+                _Right.X2 += dWidth;
+            }
         }
         //--------------------------------------------------------------
         private Button CreateButtonCheckMessages()
