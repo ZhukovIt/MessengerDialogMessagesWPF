@@ -22,14 +22,20 @@ namespace MessengerDialogMessagesWPF
     {
         private Action<byte[]> m_ShowImage;
         private Func<string, byte[]> m_GetBytesForFileType;
-        private Action m_SetStateMessageToReaded;
+        private Action<bool> m_SetStateMessageToReaded;
         private double m_FactWidth;
         private double m_FactHeight;
         private Dictionary<string, string> m_HyperLinksDict;
         private int m_MaxIndexIncomeSP;
         private int m_MaxIndexOutgoingSP;
+        private System.Drawing.Bitmap m_MessageInProcessSendImage;
+        private System.Drawing.Bitmap m_MessageDelivered;
+        private System.Drawing.Bitmap m_MessageNotDelivered;
+        private bool m_MessageHasAttachment;
         //--------------------------------------------------------------
-        public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, Action _SetStateMessageToReaded, double _FactWidth, double _FactHeight)
+        public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
+            Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight,
+            Tuple<System.Drawing.Bitmap, System.Drawing.Bitmap, System.Drawing.Bitmap> _MessageStatusImages)
         {
             InitializeComponent();
 
@@ -49,21 +55,31 @@ namespace MessengerDialogMessagesWPF
 
             m_MaxIndexOutgoingSP = 0;
 
+            m_MessageInProcessSendImage = _MessageStatusImages.Item1;
+
+            m_MessageDelivered = _MessageStatusImages.Item2;
+
+            m_MessageNotDelivered = _MessageStatusImages.Item3;
+
             GroupMessagesFromIsNewState(_Messages);
 
             MainScrollViewer.ScrollToEnd();
         }
         //--------------------------------------------------------------
-        public void AddMessage(MessengerDialogMessage _Message)
+        public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
         {
+            m_MessageHasAttachment = _HasAttachment;
+
             bool NeedRenderNewMessagesElements = !HasNewMessagesGrid(spMessages.Children);
             MessageTypeWPF _MessageTypeWPF = _Message.MessageTypeWPF;
 
             if (NeedRenderNewMessagesElements)
             {
+                spMessages.Children.Remove(spMessages.Children.Cast<FrameworkElement>().FirstOrDefault(fe => fe.Name == "btnCheckMessages"));
+                
                 spMessages.Children.Add(CreateNewMessagesGrid());
 
-                spMessages.Children.Add(CreateDepartureDateTextBox(_Message.DepartureDate));
+                spMessages.Children.Add(CreateDepartureDateTextBox(_Message.DepartureDate, true));
 
                 spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
             }
@@ -103,10 +119,7 @@ namespace MessengerDialogMessagesWPF
 
                     findSP.Children.Remove(tempRemovedElement);
 
-                    findSP.Children.Add(CreateMessageFieldStackPanelInBorder(_MessageTypeWPF, _Message));
-
-                    tempRemovedElement.Margin = new Thickness(tempRemovedElement.Margin.Left, tempRemovedElement.Margin.Top + 5,
-                        tempRemovedElement.Margin.Right, tempRemovedElement.Margin.Bottom);
+                    findSP.Children.Add(CreateMessageFieldStackPanelInBorder(_MessageTypeWPF, _Message, 5));
 
                     findSP.Children.Add(tempRemovedElement);
                 }
@@ -118,16 +131,47 @@ namespace MessengerDialogMessagesWPF
             }
 
             MainScrollViewer.ScrollToEnd();
+
+            m_MessageHasAttachment = false;
         }
         //--------------------------------------------------------------
-        public void UpdateMessage(int _MessengerDialogMessageId)
+        public void UpdateMessage(MessengerDialogMessage _MessengerDialogMessage)
         {
-            StackPanel findSP = (StackPanel)FindFrameworkElementFromKey(spMessages, $"Message{_MessengerDialogMessageId}");
+            StackPanel findSP = (StackPanel)FindFrameworkElementFromKey(spMessages, $"DepartureTimeAndStatusSP{_MessengerDialogMessage.Id}");
 
-            if (findSP == null)
+            StackPanel _Parent = (StackPanel)findSP.Parent;
+
+            TextBlock _ProxyAttachment = (TextBlock)FindFrameworkElementFromKey(_Parent, "ProxyAttachment");
+
+            if (_ProxyAttachment != null)
             {
-                throw new NotImplementedException("Проверьте есть ли среди сообщений нужное с правильным Id!");
+                if (_MessengerDialogMessage.StatusMessage == MessageStatusTypeWPF.NotDelivered)
+                {
+                    _ProxyAttachment.Text = "Вложение не загружено!";
+                }
+                else
+                {
+                    _Parent.Children.Remove(_ProxyAttachment);
+
+                    foreach (MessengerDialogMessageAttachment _Attachment in _MessengerDialogMessage.Attachments)
+                    {
+                        if (IsShowAttachmentFromFileType(_Attachment.Type))
+                        {
+                            Image _MessageFieldImage = CreateMessageFieldImage(Convert.FromBase64String(_Attachment.Data));
+
+                            _Parent.Children.Add(_MessageFieldImage);
+                        }
+                        else
+                        {
+                            _Parent.Children.Add(CreateMessageFieldFileStackPanel(_Attachment));
+                        }
+                    }
+                }
             }
+
+            _Parent.Children.Remove(findSP);
+
+            _Parent.Children.Add(CreateDepartureTimeAndStatusStackPanel(MessageTypeWPF.Outgoing, _MessengerDialogMessage));
         }
         //--------------------------------------------------------------
         #region Вспомогательные закрытые методы и атрибуты
@@ -192,7 +236,7 @@ namespace MessengerDialogMessagesWPF
                     spMessages.Children.Add(CreateNewMessagesGrid());
                 }
 
-                GroupMessagesFromDepartureDate(item.ToList());
+                GroupMessagesFromDepartureDate(item.ToList(), item.Key);
 
                 if (item.Key)
                 {
@@ -201,13 +245,13 @@ namespace MessengerDialogMessagesWPF
             }
         }
         //--------------------------------------------------------------
-        private void GroupMessagesFromDepartureDate(IEnumerable<MessengerDialogMessage> _Messages)
+        private void GroupMessagesFromDepartureDate(IEnumerable<MessengerDialogMessage> _Messages, bool _IsNew)
         {
             IEnumerable<IGrouping<string, MessengerDialogMessage>> groupedMessages = _Messages.GroupBy(m => m.DepartureDate);
 
             foreach (var item in groupedMessages)
             {
-                spMessages.Children.Add(CreateDepartureDateTextBox(item.Key));
+                spMessages.Children.Add(CreateDepartureDateTextBox(item.Key, _IsNew));
 
                 MessageTypeWPF? currentMessageType = null;
                 MessageTypeWPF? lastMessageType = null;
@@ -247,9 +291,16 @@ namespace MessengerDialogMessagesWPF
             }
         }
         //--------------------------------------------------------------
-        private TextBox CreateDepartureDateTextBox(string _DepartureDate)
+        private TextBox CreateDepartureDateTextBox(string _DepartureDate, bool _IsNew = false)
         {
             TextBox _ResultControl = new TextBox();
+
+            _ResultControl.Name = "DepartureDateTextBox";
+
+            if (_IsNew)
+            {
+                _ResultControl.Name += "New";
+            }
 
             _ResultControl.Text = _DepartureDate;
 
@@ -260,26 +311,83 @@ namespace MessengerDialogMessagesWPF
             return _ResultControl;
         }
         //--------------------------------------------------------------
-        private TextBox CreateDepartureTimeTextBox(MessageTypeWPF _MessageTypeWPF, string _DepartureDate, string _DepartureTime)
+        private StackPanel CreateDepartureTimeAndStatusStackPanel(MessageTypeWPF _MessageTypeWPF, MessengerDialogMessage _Message)
         {
-            TextBox _ResultControl = new TextBox();
+            StackPanel _ResultControl = new StackPanel();
 
-            _ResultControl.Template = (ControlTemplate)Resources["tBoxDepartureTimeTemplate"];
+            _ResultControl.Name = $"DepartureTimeAndStatusSP{_Message.Id}";
+
+            _ResultControl.Orientation = Orientation.Horizontal;
+
+            _ResultControl.HorizontalAlignment = HorizontalAlignment.Right;
+
+            _ResultControl.VerticalAlignment = VerticalAlignment.Center;
 
             _ResultControl.Margin = new Thickness(5, -2, 5, 0);
 
+            Image _MessageStatusImage = new Image();
+
+            _MessageStatusImage.Width = 16;
+
+            _MessageStatusImage.Height = 16;
+
+            MemoryStream _ImageStream = new MemoryStream();
+
+            switch (_Message.StatusMessage)
+            {
+                case MessageStatusTypeWPF.InProcessSend:
+                    m_MessageInProcessSendImage.Save(_ImageStream, ImageFormat.Png);
+                    break;
+                case MessageStatusTypeWPF.Delivered:
+                    m_MessageDelivered.Save(_ImageStream, ImageFormat.Png);
+                    break;
+                case MessageStatusTypeWPF.NotDelivered:
+                    m_MessageNotDelivered.Save(_ImageStream, ImageFormat.Png);
+                    break;
+                default:
+                    throw new NotImplementedException($"Данный код не поддерживает MessageStatusTypeWPF = {_Message.StatusMessage}");
+            }
+
+            BitmapImage _ImageSource = new BitmapImage();
+
+            _ImageSource.BeginInit();
+
+            _ImageSource.StreamSource = _ImageStream;
+
+            _ImageSource.EndInit();
+
+            _MessageStatusImage.Stretch = Stretch.Fill;
+
+            _MessageStatusImage.Source = _ImageSource;
+
+            TextBox _DepartureTimeTextBox = new TextBox();
+
+            _DepartureTimeTextBox.Template = (ControlTemplate)Resources["tBoxDepartureTimeTemplate"];
+
             if (_MessageTypeWPF == MessageTypeWPF.Income)
             {
-                _ResultControl.Text = $"({_DepartureDate})  {_DepartureTime}";
+                _DepartureTimeTextBox.Text = $"({_Message.DepartureDate})  {_Message.DepartureTime}";
+
+                _ResultControl.Children.Add(_DepartureTimeTextBox);
+
+                _ResultControl.Children.Add(_MessageStatusImage);
+
+                _DepartureTimeTextBox.Margin = new Thickness(0, 0, 5, 0);
             }
             else if (_MessageTypeWPF == MessageTypeWPF.Outgoing)
             {
                 _ResultControl.HorizontalAlignment = HorizontalAlignment.Left;
 
-                _ResultControl.Text = $"{_DepartureTime}  ({_DepartureDate})";
+                _DepartureTimeTextBox.Text = $"{_Message.DepartureTime}  ({_Message.DepartureDate})";
+
+                _ResultControl.Children.Add(_MessageStatusImage);
+
+                _ResultControl.Children.Add(_DepartureTimeTextBox);
+
+                _DepartureTimeTextBox.Margin = new Thickness(5, 0, 0, 0);
             }
 
-            _ResultControl.IsReadOnly = true;
+            _DepartureTimeTextBox.IsReadOnly = true;
 
             return _ResultControl;
         }
@@ -354,6 +462,11 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.Children.Add(_MessageFieldTextBox);
 
+            if (m_MessageHasAttachment && _Message.NeedProxyAttachment)
+            {
+                _ResultControl.Children.Add(CreateProxyAttachmentTextBlock());
+            }
+
             foreach (MessengerDialogMessageAttachment _Attachment in _Message.Attachments)
             {
                 if (IsShowAttachmentFromFileType(_Attachment.Type))
@@ -368,7 +481,7 @@ namespace MessengerDialogMessagesWPF
                 }
             }
 
-            _ResultControl.Children.Add(CreateDepartureTimeTextBox(_MessageTypeWPF, _Message.DepartureDate, _Message.DepartureTime));
+            _ResultControl.Children.Add(CreateDepartureTimeAndStatusStackPanel(_MessageTypeWPF, _Message));
 
             return _ResultControl;
         }
@@ -559,7 +672,7 @@ namespace MessengerDialogMessagesWPF
             return _ResultControl;
         }
         //--------------------------------------------------------------
-        private Border CreateMessageFieldStackPanelInBorder(MessageTypeWPF _MessageTypeWPF, MessengerDialogMessage _Message)
+        private Border CreateMessageFieldStackPanelInBorder(MessageTypeWPF _MessageTypeWPF, MessengerDialogMessage _Message, int _MarginBottom = 0)
         {
             Border _ResultControl = new Border();
 
@@ -583,6 +696,8 @@ namespace MessengerDialogMessagesWPF
             _ResultControl.Child = CreateMessageFieldStackPanel(_MessageTypeWPF, _Message);
 
             _ResultControl.Padding = new Thickness(0, 0, 0, 5);
+
+            _ResultControl.Margin = new Thickness(0, 0, 0, _MarginBottom);
 
             return _ResultControl;
         }
@@ -665,6 +780,29 @@ namespace MessengerDialogMessagesWPF
 
                 _ResultControl.Children.Add(CreateMessageOutgoingStackPanel(_MessageTypeWPF, _Messages));
             }
+
+            return _ResultControl;
+        }
+        //--------------------------------------------------------------
+        private TextBlock CreateProxyAttachmentTextBlock()
+        {
+            TextBlock _ResultControl = new TextBlock();
+
+            _ResultControl.Text = "Вложение загружается ...";
+
+            _ResultControl.Name = "ProxyAttachment";
+
+            _ResultControl.FontSize = 14;
+
+            _ResultControl.FontFamily = new FontFamily("Times New Roman");
+
+            _ResultControl.VerticalAlignment = VerticalAlignment.Center;
+
+            _ResultControl.HorizontalAlignment = HorizontalAlignment.Center;
+
+            _ResultControl.Height = 20;
+
+            _ResultControl.Margin = new Thickness(5, 0, 5, 0);
 
             return _ResultControl;
         }
@@ -760,6 +898,8 @@ namespace MessengerDialogMessagesWPF
         {
             Button _ResultControl = new Button();
 
+            _ResultControl.Name = "btnCheckMessages";
+
             _ResultControl.Template = (ControlTemplate)Resources["btnCheckMessages"];
 
             _ResultControl.Content = "Отметить сообщения как прочитанные";
@@ -814,7 +954,38 @@ namespace MessengerDialogMessagesWPF
         //--------------------------------------------------------------
         private void btnCheckMessages_Click(object sender, RoutedEventArgs e)
         {
-            m_SetStateMessageToReaded.Invoke();
+            m_SetStateMessageToReaded.Invoke(true);
+
+            //Grid _NewMessagesGrid = (Grid)FindFrameworkElementFromKey(spMessages, "NewMessagesGrid");
+
+            //spMessages.Children.Remove(_NewMessagesGrid);
+
+            //spMessages.Children.Remove((UIElement)sender);
+
+            //List<UIElement> _NewDepartureDateTextBoxes = new List<UIElement>();
+            //List<UIElement> _OldDepartureDateTextBoxes = new List<UIElement>();
+
+            //foreach (UIElement element in spMessages.Children)
+            //{
+            //    if (element is TextBox && ((FrameworkElement)element).Name == "DepartureDateTextBoxNew")
+            //    {
+            //        _NewDepartureDateTextBoxes.Add(element);
+            //    }
+            //    else if (element is TextBox && ((FrameworkElement)element).Name == "DepartureDateTextBox")
+            //    {
+            //        _OldDepartureDateTextBoxes.Add(element);
+            //    }
+            //}
+
+            //for (int i = 0; i < _NewDepartureDateTextBoxes.Count; i++)
+            //{
+            //    if (_OldDepartureDateTextBoxes.Count == 0 && i == _NewDepartureDateTextBoxes.Count - 1)
+            //    {
+            //        break;
+            //    }
+
+            //    spMessages.Children.Remove(_NewDepartureDateTextBoxes[i]);
+            //}
         }
         //--------------------------------------------------------------
         #endregion

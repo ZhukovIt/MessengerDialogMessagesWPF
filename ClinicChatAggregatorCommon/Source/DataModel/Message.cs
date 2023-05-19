@@ -21,6 +21,8 @@ namespace SiMed.Clinic.DataModel
         public ChatDialog ChatDialog { get; set; }
 
         public string GUID { get; set; }
+
+        public string URL { get; set; }
     }
 
     public enum MessageType

@@ -31,6 +31,10 @@ namespace MessengerDialogMessagesWPF
 
         public bool IsNewMessage { get; set; }
 
+        public MessageStatusTypeWPF StatusMessage { get; set; }
+
         public IEnumerable<MessengerDialogMessageAttachment> Attachments { get; set; }
+
+        public bool NeedProxyAttachment { get; set; }
     }
 }
