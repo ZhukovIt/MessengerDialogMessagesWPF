@@ -36,5 +36,7 @@ namespace MessengerDialogMessagesWPF
         public IEnumerable<MessengerDialogMessageAttachment> Attachments { get; set; }
 
         public bool NeedProxyAttachment { get; set; }
+
+        public string URL { get; set; }
     }
 }

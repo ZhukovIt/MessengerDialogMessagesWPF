@@ -20,6 +20,7 @@ namespace MessengerDialogMessagesWPF
     /// </summary>
     public partial class MessengerDialogMessagesWPF : UserControl
     {
+        private MessengerDialogWPF m_MessengerDialog;
         private Action<byte[]> m_ShowImage;
         private Func<string, byte[]> m_GetBytesForFileType;
         private Action<bool> m_SetStateMessageToReaded;
@@ -33,11 +34,24 @@ namespace MessengerDialogMessagesWPF
         private System.Drawing.Bitmap m_MessageNotDelivered;
         private bool m_MessageHasAttachment;
         //--------------------------------------------------------------
-        public MessengerDialogMessagesWPF(List<MessengerDialogMessage> _Messages, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
+        public MessengerDialogMessagesWPF(MessengerDialogWPF _MessengerDialog, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
             Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight,
             Tuple<System.Drawing.Bitmap, System.Drawing.Bitmap, System.Drawing.Bitmap> _MessageStatusImages)
         {
             InitializeComponent();
+
+            m_MessengerDialog = _MessengerDialog;
+
+            m_HyperLinksDict = new Dictionary<string, string>();
+
+            if (_MessengerDialog.Messages.Count > 0)
+            {
+                CheckSetURLHyperLinkComment(_MessengerDialog.Messages[0]);
+            }
+
+            _MessengerDialog.SetIsReadChangedEventHandler(MessengerDialogIsRead_Changed);
+
+            MessengerDialogIsRead_Changed(_MessengerDialog);
 
             m_ShowImage = _ShowImage;
 
@@ -49,8 +63,6 @@ namespace MessengerDialogMessagesWPF
 
             m_FactHeight = _FactHeight;
 
-            m_HyperLinksDict = new Dictionary<string, string>();
-
             m_MaxIndexIncomeSP = 0;
 
             m_MaxIndexOutgoingSP = 0;
@@ -61,7 +73,7 @@ namespace MessengerDialogMessagesWPF
 
             m_MessageNotDelivered = _MessageStatusImages.Item3;
 
-            GroupMessagesFromIsNewState(_Messages);
+            GroupMessagesFromIsNewState(_MessengerDialog.Messages);
 
             MainScrollViewer.ScrollToEnd();
         }
@@ -69,42 +81,54 @@ namespace MessengerDialogMessagesWPF
         public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
         {
             m_MessageHasAttachment = _HasAttachment;
+            MessageTypeWPF _MessageTypeWPF = _Message.MessageTypeWPF;
+            Action AddNewMainStackPanelDelegate = new Action(() =>
+            {
+                spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
+            });
 
             bool NeedRenderNewMessagesElements = !HasNewMessagesGrid(spMessages.Children);
-            MessageTypeWPF _MessageTypeWPF = _Message.MessageTypeWPF;
 
-            if (NeedRenderNewMessagesElements)
+            if (_MessageTypeWPF == MessageTypeWPF.Income)
             {
-                spMessages.Children.Remove(spMessages.Children.Cast<FrameworkElement>().FirstOrDefault(fe => fe.Name == "btnCheckMessages"));
-                
+                m_MessengerDialog.IsRead = false;
+            }
+            else if (!NeedRenderNewMessagesElements)
+            {
+                btnCheckMessages_Click(null, null);
+            }
+            else
+            {
+                m_MessengerDialog.IsRead = true;
+            }
+
+            if (NeedRenderNewMessagesElements && _MessageTypeWPF == MessageTypeWPF.Income)
+            {
                 spMessages.Children.Add(CreateNewMessagesGrid());
 
                 spMessages.Children.Add(CreateDepartureDateTextBox(_Message.DepartureDate, true));
 
-                spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
+                AddNewMainStackPanelDelegate.Invoke();
+            }
+            else if (_MessageTypeWPF == MessageTypeWPF.Income && m_MaxIndexIncomeSP == 0)
+            {
+                AddNewMainStackPanelDelegate.Invoke();
+            }
+            else if (_MessageTypeWPF == MessageTypeWPF.Outgoing && m_MaxIndexOutgoingSP == 0)
+            {
+                AddNewMainStackPanelDelegate.Invoke();
             }
             else
             {
-                string _KeyToFind;
+                FrameworkElement _LastMainStackPanel = GetLastMainStackPanelFromMessageTypeWPF(_MessageTypeWPF);
 
-                if (_Message.MessageTypeWPF == MessageTypeWPF.Income)
+                if (_LastMainStackPanel == null)
                 {
-                    _KeyToFind = "IncomeMessageOutgoingSP" + m_MaxIndexIncomeSP.ToString();
+                    AddNewMainStackPanelDelegate.Invoke();
                 }
                 else
                 {
-                    _KeyToFind = "OutgoingMessageOutgoingSP" + m_MaxIndexOutgoingSP.ToString();
-                }
-
-                FrameworkElement findElement = FindFrameworkElementFromKey(spMessages, _KeyToFind);
-
-                if (findElement == null)
-                {
-                    spMessages.Children.Add(CreateMessageMainStackPanel(_MessageTypeWPF, new List<MessengerDialogMessage>() { _Message }));
-                }
-                else
-                {
-                    StackPanel findSP = (StackPanel)findElement;
+                    StackPanel findSP = (StackPanel)_LastMainStackPanel;
 
                     FrameworkElement tempRemovedElement = null;
 
@@ -123,11 +147,6 @@ namespace MessengerDialogMessagesWPF
 
                     findSP.Children.Add(tempRemovedElement);
                 }
-            }
-
-            if (NeedRenderNewMessagesElements)
-            {
-                spMessages.Children.Add(CreateButtonCheckMessages());
             }
 
             MainScrollViewer.ScrollToEnd();
@@ -174,7 +193,63 @@ namespace MessengerDialogMessagesWPF
             _Parent.Children.Add(CreateDepartureTimeAndStatusStackPanel(MessageTypeWPF.Outgoing, _MessengerDialogMessage));
         }
         //--------------------------------------------------------------
+        public void Delete()
+        {
+            spMessages.Children.Clear();
+
+            var btnCheckMessages = FindFrameworkElementFromKey(MainGrid, "btnCheckMessages");
+
+            if (btnCheckMessages != null)
+            {
+                MainGrid.Children.Remove(btnCheckMessages);
+            }
+
+            var urlHyperLinkStackPanel = FindFrameworkElementFromKey(MainGrid, "URLHyperLinkStackPanel");
+
+            if (urlHyperLinkStackPanel != null)
+            {
+                MainGrid.Children.Remove(urlHyperLinkStackPanel);
+            }
+        }
+        //--------------------------------------------------------------
         #region Вспомогательные закрытые методы и атрибуты
+        //--------------------------------------------------------------
+        private FrameworkElement GetLastMainStackPanelFromMessageTypeWPF(MessageTypeWPF _MessageTypeWPF)
+        {
+            string _IncomeKeyToFind = "IncomeMessageOutgoingSP" + m_MaxIndexIncomeSP.ToString();
+            string _OutgoingKeyToFind = "OutgoingMessageOutgoingSP" + m_MaxIndexOutgoingSP.ToString();
+            int _Count = spMessages.Children.Count;
+
+            for (int i = _Count - 1; i >= 0; i--)
+            {
+                UIElement temp = spMessages.Children[i];
+
+                if (temp is Panel)
+                {
+                    FrameworkElement _IncomeFE = FindFrameworkElementFromKey((Panel)temp, _IncomeKeyToFind);
+                    FrameworkElement _OutgoingFE = FindFrameworkElementFromKey((Panel)temp, _OutgoingKeyToFind);
+
+                    if (_IncomeFE == null && _OutgoingFE == null)
+                    {
+                        continue;
+                    }
+                    else if (_MessageTypeWPF == MessageTypeWPF.Income && _IncomeFE != null)
+                    {
+                        return _IncomeFE;
+                    }
+                    else if (_MessageTypeWPF == MessageTypeWPF.Outgoing && _OutgoingFE != null)
+                    {
+                        return _OutgoingFE;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return null;
+        }
         //--------------------------------------------------------------
         private bool HasNewMessagesGrid(IEnumerable elements)
         {
@@ -237,11 +312,6 @@ namespace MessengerDialogMessagesWPF
                 }
 
                 GroupMessagesFromDepartureDate(item.ToList(), item.Key);
-
-                if (item.Key)
-                {
-                    spMessages.Children.Add(CreateButtonCheckMessages());
-                }
             }
         }
         //--------------------------------------------------------------
@@ -255,17 +325,20 @@ namespace MessengerDialogMessagesWPF
 
                 MessageTypeWPF? currentMessageType = null;
                 MessageTypeWPF? lastMessageType = null;
+                string currentSecUserFIO = null;
+                string lastSecUserFIO = null;
                 List<MessengerDialogMessage> messages = new List<MessengerDialogMessage>();
 
                 foreach (MessengerDialogMessage message in item)
                 {
                     currentMessageType = message.MessageTypeWPF;
+                    currentSecUserFIO = message.UserName;
 
                     if (lastMessageType == null)
                     {
                         messages.Add(message);
                     }
-                    else if (currentMessageType == lastMessageType)
+                    else if (currentMessageType == lastMessageType && currentSecUserFIO == lastSecUserFIO)
                     {
                         messages.Add(message);
                     }
@@ -282,6 +355,7 @@ namespace MessengerDialogMessagesWPF
                     }
 
                     lastMessageType = message.MessageTypeWPF;
+                    lastSecUserFIO = message.UserName;
                 }
 
                 if (messages.Count > 0)
@@ -956,36 +1030,97 @@ namespace MessengerDialogMessagesWPF
         {
             m_SetStateMessageToReaded.Invoke(true);
 
-            //Grid _NewMessagesGrid = (Grid)FindFrameworkElementFromKey(spMessages, "NewMessagesGrid");
+            MainGrid.Children.Remove((UIElement)sender);
 
-            //spMessages.Children.Remove(_NewMessagesGrid);
+            m_MessengerDialog.IsRead = true;
+        }
+        //--------------------------------------------------------------
+        private void MessengerDialogIsRead_Changed(MessengerDialogWPF _Sender)
+        {
+            if (_Sender.IsRead)
+            {
+                FrameworkElement btnCheckMessages = FindFrameworkElementFromKey(MainGrid, "btnCheckMessages");
 
-            //spMessages.Children.Remove((UIElement)sender);
+                if (btnCheckMessages != null)
+                {
+                    MainGrid.Children.Remove(btnCheckMessages);
+                }
+            }
+            else
+            {
+                if (FindFrameworkElementFromKey(MainGrid, "btnCheckMessages") == null)
+                {
+                    Button btnCheckMessages = CreateButtonCheckMessages();
 
-            //List<UIElement> _NewDepartureDateTextBoxes = new List<UIElement>();
-            //List<UIElement> _OldDepartureDateTextBoxes = new List<UIElement>();
+                    MainGrid.Children.Add(btnCheckMessages);
 
-            //foreach (UIElement element in spMessages.Children)
-            //{
-            //    if (element is TextBox && ((FrameworkElement)element).Name == "DepartureDateTextBoxNew")
-            //    {
-            //        _NewDepartureDateTextBoxes.Add(element);
-            //    }
-            //    else if (element is TextBox && ((FrameworkElement)element).Name == "DepartureDateTextBox")
-            //    {
-            //        _OldDepartureDateTextBoxes.Add(element);
-            //    }
-            //}
+                    Grid.SetRow(btnCheckMessages, 1);
+                }
+            }
+        }
+        //--------------------------------------------------------------
+        private void CheckSetURLHyperLinkComment(MessengerDialogMessage _FirstMessage)
+        {
+            if (m_MessengerDialog.IsComment && _FirstMessage.URL != null)
+            {
+                StackPanel _URLHyperLinkStackPanel = CreateURLHyperLinkStackPanel(_FirstMessage.URL);
 
-            //for (int i = 0; i < _NewDepartureDateTextBoxes.Count; i++)
-            //{
-            //    if (_OldDepartureDateTextBoxes.Count == 0 && i == _NewDepartureDateTextBoxes.Count - 1)
-            //    {
-            //        break;
-            //    }
+                MainGrid.Children.Add(_URLHyperLinkStackPanel);
 
-            //    spMessages.Children.Remove(_NewDepartureDateTextBoxes[i]);
-            //}
+                Grid.SetRow(_URLHyperLinkStackPanel, 2);
+            }
+        }
+        //--------------------------------------------------------------
+        private StackPanel CreateURLHyperLinkStackPanel(string _MessageURL)
+        {
+            StackPanel _ResultControl = new StackPanel();
+
+            _ResultControl.Name = "URLHyperLinkStackPanel";
+
+            _ResultControl.Orientation = Orientation.Horizontal;
+
+            _ResultControl.HorizontalAlignment = HorizontalAlignment.Center;
+
+            TextBlock _URLHyperLinkTextBlock = CreateURLHyperLinkTextBlock(_MessageURL);
+
+            _ResultControl.Children.Add(_URLHyperLinkTextBlock);
+
+            return _ResultControl;
+        }
+        //--------------------------------------------------------------
+        private TextBlock CreateURLHyperLinkTextBlock(string _MessageURL)
+        {
+            TextBlock _ResultControl = new TextBlock();
+
+            _ResultControl.VerticalAlignment = VerticalAlignment.Center;
+
+            _ResultControl.HorizontalAlignment = HorizontalAlignment.Center;
+
+            _ResultControl.FontSize = 14;
+
+            _ResultControl.FontFamily = new FontFamily("Times New Roman");
+
+            _ResultControl.Margin = new Thickness(10);
+
+            string _Text = "Ссылка на первый комментарий";
+
+            if (!string.IsNullOrEmpty(_MessageURL?.Trim()))
+            {
+                Hyperlink hyperlink = new Hyperlink();
+
+                hyperlink.Inlines.Add(_Text);
+
+                if (!m_HyperLinksDict.ContainsKey(_Text))
+                {
+                    m_HyperLinksDict.Add(_Text, _MessageURL);
+                }
+
+                hyperlink.Click += HyperLink_Click;
+
+                _ResultControl.Inlines.Add(hyperlink);
+            }
+
+            return _ResultControl;
         }
         //--------------------------------------------------------------
         #endregion

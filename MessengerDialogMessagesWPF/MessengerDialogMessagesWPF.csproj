@@ -55,6 +55,7 @@
     </Page>
     <Compile Include="DataModel\MessageStatusTypeWPF.cs" />
     <Compile Include="DataModel\MessageTypeWPF.cs" />
+    <Compile Include="DataModel\MessengerDialogWPF.cs" />
     <Compile Include="DataModel\MessengerDialogMessage.cs" />
     <Compile Include="DataModel\MessengerDialogMessageAttachment.cs" />
     <Compile Include="MessengerDialogMessagesWPF.xaml.cs">

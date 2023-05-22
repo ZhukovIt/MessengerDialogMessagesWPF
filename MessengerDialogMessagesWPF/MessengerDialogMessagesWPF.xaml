@@ -21,7 +21,7 @@
         </Style>
 
         <ControlTemplate TargetType="Button" x:Key="btnCheckMessages">
-            <Border CornerRadius="11" BorderThickness="2" BorderBrush="Black" Background="White" Width="300" Height="auto">
+            <Border CornerRadius="11" BorderThickness="2" BorderBrush="Black" Background="White" Width="300" Height="auto" Margin="0, 5, 0, 5">
                 <ContentControl Margin="0, 5, 0, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman" Content="{TemplateBinding Content}"></ContentControl>
             </Border>
         </ControlTemplate>
@@ -66,11 +66,16 @@
 
 
 
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Padding="0, 0, 0, 10">
+            <StackPanel x:Name="spMessages" Orientation="Vertical">
 
-    <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Padding="0, 0, 0, 10">
-        <StackPanel x:Name="spMessages" Orientation="Vertical">
-            
-        </StackPanel>
-    </ScrollViewer>
-
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>
