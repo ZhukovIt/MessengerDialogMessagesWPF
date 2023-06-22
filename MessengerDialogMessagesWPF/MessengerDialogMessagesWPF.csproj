@@ -49,11 +49,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml">
+    <Page Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml">
+    <Page Include="GUI\UserControls\BackgroundPanelMessagesWPF.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -65,11 +65,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml.cs">
-      <DependentUpon>BackgroundPanelDialogsWPFView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml.cs">
       <DependentUpon>MessengerDialogMessagesWPFView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UserControls\BackgroundPanelMessagesWPF.xaml.cs">
+      <DependentUpon>BackgroundPanelMessagesWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\UserControls\BackgroundPanelDialogsWPF.xaml.cs">
       <DependentUpon>BackgroundPanelDialogsWPF.xaml</DependentUpon>
