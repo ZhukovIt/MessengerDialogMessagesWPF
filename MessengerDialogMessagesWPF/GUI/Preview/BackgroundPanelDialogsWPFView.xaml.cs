@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace MessengerDialogMessagesWPF
 {
     /// <summary>
-    /// Логика взаимодействия для BackgroundPanelWPF.xaml
+    /// Логика взаимодействия для BackgroundPanelDialogsWPF.xaml
     /// </summary>
-    public partial class BackgroundPanelWPF : Window
+    public partial class BackgroundPanelDialogsViewWPF : UserControl
     {
-        public BackgroundPanelWPF()
+        public BackgroundPanelDialogsViewWPF()
         {
             InitializeComponent();
         }

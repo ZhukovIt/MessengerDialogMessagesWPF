@@ -49,23 +49,30 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="BackgroundPanelWPF.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MessengerDialogMessagesWPF.xaml">
+    <Page Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="BackgroundPanelWPF.xaml.cs">
-      <DependentUpon>BackgroundPanelWPF.xaml</DependentUpon>
+    <Page Include="GUI\UserControls\BackgroundPanelDialogsWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\UserControls\MessengerDialogMessagesWPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml.cs">
+      <DependentUpon>BackgroundPanelDialogsWPFView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UserControls\BackgroundPanelDialogsWPF.xaml.cs">
+      <DependentUpon>BackgroundPanelDialogsWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\MessageStatusTypeWPF.cs" />
     <Compile Include="DataModel\MessageTypeWPF.cs" />
     <Compile Include="DataModel\MessengerDialogWPF.cs" />
     <Compile Include="DataModel\MessengerDialogMessage.cs" />
     <Compile Include="DataModel\MessengerDialogMessageAttachment.cs" />
-    <Compile Include="MessengerDialogMessagesWPF.xaml.cs">
+    <Compile Include="GUI\UserControls\MessengerDialogMessagesWPF.xaml.cs">
       <DependentUpon>MessengerDialogMessagesWPF.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
