@@ -63,6 +63,46 @@ namespace MessengerDialogMessagesWPF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap businessman48 {
+            get {
+                object obj = ResourceManager.GetObject("businessman48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close_window15 {
+            get {
+                object obj = ResourceManager.GetObject("close_window15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap collapse_window15 {
+            get {
+                object obj = ResourceManager.GetObject("collapse_window15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap expand_window15 {
+            get {
+                object obj = ResourceManager.GetObject("expand_window15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap message_delivered16 {
             get {
                 object obj = ResourceManager.GetObject("message_delivered16", resourceCulture);
@@ -86,6 +126,26 @@ namespace MessengerDialogMessagesWPF.Properties {
         internal static System.Drawing.Bitmap message_not_delivered16 {
             get {
                 object obj = ResourceManager.GetObject("message_not_delivered16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VectorVk {
+            get {
+                object obj = ResourceManager.GetObject("VectorVk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap vk {
+            get {
+                object obj = ResourceManager.GetObject("vk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

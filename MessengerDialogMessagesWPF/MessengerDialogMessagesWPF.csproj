@@ -49,10 +49,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BackgroundPanelWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessengerDialogMessagesWPF.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="BackgroundPanelWPF.xaml.cs">
+      <DependentUpon>BackgroundPanelWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\MessageStatusTypeWPF.cs" />
     <Compile Include="DataModel\MessageTypeWPF.cs" />
     <Compile Include="DataModel\MessengerDialogWPF.cs" />
@@ -95,6 +102,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\message_not_delivered16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="collapse_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapse_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expand_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="expand_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="close_window15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\businessman48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VectorVk.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
