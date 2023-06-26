@@ -34,6 +34,11 @@ namespace MessengerDialogMessagesWPF
         private System.Drawing.Bitmap m_MessageNotDelivered;
         private bool m_MessageHasAttachment;
         //--------------------------------------------------------------
+        public MessengerDialogMessagesWPF()
+        {
+
+        }
+        //--------------------------------------------------------------
         public MessengerDialogMessagesWPF(MessengerDialogWPF _MessengerDialog, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
             Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight,
             Tuple<System.Drawing.Bitmap, System.Drawing.Bitmap, System.Drawing.Bitmap> _MessageStatusImages)

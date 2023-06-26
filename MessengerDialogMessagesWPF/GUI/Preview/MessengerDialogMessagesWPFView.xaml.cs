@@ -16,7 +16,7 @@ using System.Collections;
 namespace MessengerDialogMessagesWPF
 {
     /// <summary>
-    /// Логика взаимодействия для MessengerDialogMessagesWPF.xaml
+    /// Логика взаимодействия для MessengerDialogMessagesWPFView.xaml
     /// </summary>
     public partial class MessengerDialogMessagesWPFView : UserControl
     {
@@ -34,49 +34,52 @@ namespace MessengerDialogMessagesWPF
         private System.Drawing.Bitmap m_MessageNotDelivered;
         private bool m_MessageHasAttachment;
         //--------------------------------------------------------------
-        public MessengerDialogMessagesWPFView(MessengerDialogWPF _MessengerDialog, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
-            Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight,
-            Tuple<System.Drawing.Bitmap, System.Drawing.Bitmap, System.Drawing.Bitmap> _MessageStatusImages)
+        public MessengerDialogMessagesWPFView()
         {
             InitializeComponent();
-
-            m_MessengerDialog = _MessengerDialog;
-
-            m_HyperLinksDict = new Dictionary<string, string>();
-
-            if (_MessengerDialog.Messages.Count > 0)
-            {
-                CheckSetURLHyperLinkComment(_MessengerDialog.Messages[0]);
-            }
-
-            _MessengerDialog.SetIsReadChangedEventHandler(MessengerDialogIsRead_Changed);
-
-            MessengerDialogIsRead_Changed(_MessengerDialog);
-
-            m_ShowImage = _ShowImage;
-
-            m_GetBytesForFileType = _GetBytesForFileType;
-
-            m_SetStateMessageToReaded = _SetStateMessageToReaded;
-
-            m_FactWidth = _FactWidth;
-
-            m_FactHeight = _FactHeight;
-
-            m_MaxIndexIncomeSP = 0;
-
-            m_MaxIndexOutgoingSP = 0;
-
-            m_MessageInProcessSendImage = _MessageStatusImages.Item1;
-
-            m_MessageDelivered = _MessageStatusImages.Item2;
-
-            m_MessageNotDelivered = _MessageStatusImages.Item3;
-
-            GroupMessagesFromIsNewState(_MessengerDialog.Messages);
-
-            MainScrollViewer.ScrollToEnd();
         }
+        //--------------------------------------------------------------
+        //public MessengerDialogMessagesWPFView(MessengerDialogWPF _MessengerDialog, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
+        //    Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight,
+        //    Tuple<System.Drawing.Bitmap, System.Drawing.Bitmap, System.Drawing.Bitmap> _MessageStatusImages) : this()
+        //{
+        //    m_MessengerDialog = _MessengerDialog;
+
+        //    m_HyperLinksDict = new Dictionary<string, string>();
+
+        //    if (_MessengerDialog.Messages.Count > 0)
+        //    {
+        //        CheckSetURLHyperLinkComment(_MessengerDialog.Messages[0]);
+        //    }
+
+        //    _MessengerDialog.SetIsReadChangedEventHandler(MessengerDialogIsRead_Changed);
+
+        //    MessengerDialogIsRead_Changed(_MessengerDialog);
+
+        //    m_ShowImage = _ShowImage;
+
+        //    m_GetBytesForFileType = _GetBytesForFileType;
+
+        //    m_SetStateMessageToReaded = _SetStateMessageToReaded;
+
+        //    m_FactWidth = _FactWidth;
+
+        //    m_FactHeight = _FactHeight;
+
+        //    m_MaxIndexIncomeSP = 0;
+
+        //    m_MaxIndexOutgoingSP = 0;
+
+        //    m_MessageInProcessSendImage = _MessageStatusImages.Item1;
+
+        //    m_MessageDelivered = _MessageStatusImages.Item2;
+
+        //    m_MessageNotDelivered = _MessageStatusImages.Item3;
+
+        //    GroupMessagesFromIsNewState(_MessengerDialog.Messages);
+
+        //    MainScrollViewer.ScrollToEnd();
+        //}
         //--------------------------------------------------------------
         public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
         {

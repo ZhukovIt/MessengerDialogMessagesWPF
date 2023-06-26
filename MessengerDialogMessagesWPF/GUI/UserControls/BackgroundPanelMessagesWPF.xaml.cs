@@ -22,5 +22,17 @@ namespace MessengerDialogMessagesWPF
         {
             InitializeComponent();
         }
+        //-----------------------------------------------------------------------------------
+        private void tBoxMessage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox _Sender = (TextBox)sender;
+            double _TextWidth = MeasureTextWorker.MeasureWidthText(_Sender);
+            double _MaxWidth = _Sender.Width - 50;
+            if (_MaxWidth - _TextWidth <= 0)
+            {
+
+            }
+        }
+        //-----------------------------------------------------------------------------------
     }
 }

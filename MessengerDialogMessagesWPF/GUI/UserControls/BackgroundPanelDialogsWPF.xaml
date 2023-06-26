@@ -34,21 +34,21 @@
                 <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../collapse_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.2"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
                 <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../expand_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.1"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
                 <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../close_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.1"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
@@ -109,9 +109,9 @@
                         </TextBlock>
                     </Grid>
 
-                    <Grid Height="4" Background="White">
+                    <Grid Height="1" Background="White">
                         <Grid.Effect>
-                            <DropShadowEffect BlurRadius="8" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
+                            <DropShadowEffect BlurRadius="5" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
                         </Grid.Effect>
                     </Grid>
 
@@ -155,13 +155,13 @@
                         </Border>
                         <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                     Margin="10, 5, 1, 4" TextWrapping="Wrap" FontFamily="Inter" FontSize="10" LineHeight="12.1" FontWeight="Normal">
-                    Здравствуйте, подскажите, пожалуйста, можноли записаться на прием к Игнатовой Ирине Васильевне в ближайшее время?
+                    Здравствуйте, подскажите, пожалуйста, можно ли записаться на прием к Игнатовой Ирине Васильевне в ближайшее время?
                         </TextBlock>
                     </Grid>
 
-                    <Grid Height="4" Background="#ACE1FE" Opacity="0.38">
+                    <Grid Height="1" Background="White">
                         <Grid.Effect>
-                            <DropShadowEffect BlurRadius="8" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
+                            <DropShadowEffect BlurRadius="5" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
                         </Grid.Effect>
                     </Grid>
 
@@ -183,7 +183,7 @@
                         </Grid.ColumnDefinitions>
                         <Ellipse Width="20" Height="20" VerticalAlignment="Center" Margin="10, 0, 7, 0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="../../Resources/businessman48.png">
+                                <ImageBrush ImageSource="businessman48.png">
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
@@ -205,12 +205,12 @@
                         </Border>
                         <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                     Margin="10, 5, 1, 4" TextWrapping="Wrap" FontFamily="Inter" FontSize="10" LineHeight="12.1" FontWeight="Normal">
-                    Здравствуйте, подскажите, пожалуйста, можноли записаться на прием к Игнатовой Ирине Васильевне в ближайшее время?
+                    Здравствуйте, подскажите, пожалуйста, можно ли записаться на прием к Игнатовой Ирине Васильевне в ближайшее время?
                         </TextBlock>
                     </Grid>
-                    <Grid Height="4" Background="White">
+                    <Grid Height="1" Background="White">
                         <Grid.Effect>
-                            <DropShadowEffect BlurRadius="8" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
+                            <DropShadowEffect BlurRadius="5" Color="Black" ShadowDepth="2" Direction="270" Opacity="1"></DropShadowEffect>
                         </Grid.Effect>
                     </Grid>
                 </StackPanel>

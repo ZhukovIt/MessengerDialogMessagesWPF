@@ -133,6 +133,26 @@ namespace MessengerDialogMessagesWPF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SendMessage {
+            get {
+                object obj = ResourceManager.GetObject("SendMessage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap swap_user {
+            get {
+                object obj = ResourceManager.GetObject("swap_user", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap VectorVk {
             get {
                 object obj = ResourceManager.GetObject("VectorVk", resourceCulture);
@@ -146,6 +166,36 @@ namespace MessengerDialogMessagesWPF.Properties {
         internal static System.Drawing.Bitmap vk {
             get {
                 object obj = ResourceManager.GetObject("vk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap white_close_window {
+            get {
+                object obj = ResourceManager.GetObject("white_close_window", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap white_collapse_window {
+            get {
+                object obj = ResourceManager.GetObject("white_collapse_window", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap white_expand_window {
+            get {
+                object obj = ResourceManager.GetObject("white_expand_window", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

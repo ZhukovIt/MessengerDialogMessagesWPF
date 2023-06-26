@@ -6,7 +6,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessengerDialogMessagesWPF"
         mc:Ignorable="d"
-        d:DesignHeight="360" d:DesignWidth="225">
+    d:DesignHeight="360" d:DesignWidth="225">
+
+    <UserControl.Resources>
+        <ControlTemplate TargetType="TextBox" x:Key="tBoxMessage">
+            <Border Height="34" Background="#F0EDED" CornerRadius="10" BorderThickness="1" BorderBrush="#ABABAB" Cursor="IBeam">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="22"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{TemplateBinding Text}" Margin="8,0,4,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                             FontFamily="Inter" FontWeight="Normal" FontStyle="Normal" FontSize="10" Width="155" VerticalContentAlignment="Center"
+                             Background="#F0EDED" BorderThickness="0" Grid.Column="0" Height="30" TextAlignment="Left"
+                             HorizontalContentAlignment="Left">
+                    </TextBox>
+                    <Button Grid.Row="0" Width="18" Height="16" Grid.Column="1" Background="#F0EDED" BorderThickness="0" 
+                        Margin="0, 0, 4, 0" Padding="0" Cursor="Hand" HorizontalAlignment="Right">
+                        <Image Source="SendMessage.png"/>
+                    </Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
 
     <Border BorderThickness="1">
         <Border.BorderBrush>
@@ -26,35 +48,37 @@
                 <RowDefinition Height="18"/>
                 <RowDefinition Height="5"/>
                 <RowDefinition/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="42"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="ChatsName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
                    FontSize="15" FontFamily="Inter" FontWeight="DemiBold" LineHeight="18.15"
                    Width="40" Height="18" Margin="0, 0, 0, 3"><Run Text="Чаты"/></TextBlock>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../collapse_window15.png" Stretch="UniformToFill">
+                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_collapse_window.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.2"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../expand_window15.png" Stretch="UniformToFill">
+                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Margin="0, 0, 1, 0" Cursor="Hand">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_expand_window.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.1"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../close_window15.png" Stretch="UniformToFill">
+                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_close_window.png" Stretch="UniformToFill">
                         <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.1"></DropShadowEffect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
             </StackPanel>
             <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto">
-                <StackPanel x:Name="spDialogs">
+                <StackPanel x:Name="spMessages">
                     <StackPanel.Background>
                         <SolidColorBrush Color="White"></SolidColorBrush>
                     </StackPanel.Background>
@@ -66,6 +90,48 @@
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
+            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid.Background>
+                    <SolidColorBrush Color="White"></SolidColorBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="33"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28"></RowDefinition>
+                    <RowDefinition Height="17"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#E97C7C" Margin="12, 20, 0, 0"
+                       FontFamily="Inter" FontSize="7" FontStyle="Normal" FontWeight="Normal" LineHeight="8.47">
+                С диалогом работает пользователь:
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#E97C7C" Margin="12, 0, 0, 0"
+                       FontFamily="Inter" FontSize="7" FontStyle="Normal" FontWeight="Normal" LineHeight="8.47">
+                Агнесса Карпова
+                </TextBlock>
+                <Button Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="22" Height="22" Cursor="Hand"
+                        VerticalAlignment="Top" Margin="0, 19, 11, 0" BorderThickness="0" Background="White" Padding="0">
+                    <Image Source="../../Resources/swap_user.png" Width="20" Height="20" Margin="0, 0, 0, 0"
+                           VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image.Effect>
+                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
+                        </Image.Effect>
+                    </Image>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid.Background>
+                    <SolidColorBrush Color="White"></SolidColorBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="8"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Template="{StaticResource tBoxMessage}" x:Name="tBoxMessage" Margin="8, 0, 0, 0">
+                    
+                </TextBox>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

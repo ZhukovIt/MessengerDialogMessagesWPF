@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="DataModel\MeasureTextWorker.cs" />
     <Compile Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml.cs">
       <DependentUpon>MessengerDialogMessagesWPFView.xaml</DependentUpon>
     </Compile>
@@ -121,13 +122,13 @@
     <Resource Include="collapse_window15.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\close_window15.png" />
+    <Resource Include="Resources\close_window15.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\collapse_window15.png" />
+    <Resource Include="Resources\collapse_window15.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\expand_window15.png" />
+    <Resource Include="Resources\expand_window15.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="expand_window15.png" />
@@ -136,13 +137,37 @@
     <Resource Include="close_window15.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\businessman48.png" />
+    <Resource Include="Resources\businessman48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\vk.png" />
+    <Resource Include="Resources\vk.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\VectorVk.png" />
+    <Resource Include="Resources\VectorVk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GUI\UserControls\swap_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\swap_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SendMessage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GUI\UserControls\SendMessage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\white_close_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\white_collapse_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\white_expand_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GUI\UserControls\businessman48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
