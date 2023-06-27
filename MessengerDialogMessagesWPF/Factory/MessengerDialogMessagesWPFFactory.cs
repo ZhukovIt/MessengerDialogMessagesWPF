@@ -29,37 +29,37 @@ namespace MessengerDialogMessagesWPF.Factory
         //--------------------------------------------------------------
         public override FrameworkElement Create(RequestInfo _RequestInfo)
         {
-            switch ((FactoryFrameworkElementTypes)_RequestInfo.ElementType)
+            switch ((MessengerDialogMessagesWPFElementTypes)_RequestInfo.ElementType)
             {
-                case FactoryFrameworkElementTypes.NewMessagesGrid:
+                case MessengerDialogMessagesWPFElementTypes.NewMessagesGrid:
                     return CreateNewMessagesGrid();
-                case FactoryFrameworkElementTypes.DepartureDateTextBox:
+                case MessengerDialogMessagesWPFElementTypes.DepartureDateTextBox:
                     return CreateDepartureDateTextBox((string)_RequestInfo.lParam, (bool)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.DepartureTimeAndStatusStackPanel:
+                case MessengerDialogMessagesWPFElementTypes.DepartureTimeAndStatusStackPanel:
                     return CreateDepartureTimeAndStatusStackPanel((MessageTypeWPF)_RequestInfo.lParam, (MessengerDialogMessage)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.MessageSourceTextBox:
+                case MessengerDialogMessagesWPFElementTypes.MessageSourceTextBox:
                     return CreateMessageSourceTextBox((MessageTypeWPF)_RequestInfo.lParam, (Tuple<string, int, int>)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.CompanionNameTextBox:
+                case MessengerDialogMessagesWPFElementTypes.CompanionNameTextBox:
                     return CreateCompanionNameTextBox((MessageTypeWPF)_RequestInfo.lParam, (string)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.MessageFieldTextBox:
+                case MessengerDialogMessagesWPFElementTypes.MessageFieldTextBox:
                     return CreateMessageFieldTextBox((MessageTypeWPF)_RequestInfo.lParam, (string)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.ClientImageInEllipse:
+                case MessengerDialogMessagesWPFElementTypes.ClientImageInEllipse:
                     return CreateClientImageInEllipse((byte[])_RequestInfo.lParam);
-                case FactoryFrameworkElementTypes.ProxyAttachmentTextBlock:
+                case MessengerDialogMessagesWPFElementTypes.ProxyAttachmentTextBlock:
                     return CreateProxyAttachmentTextBlock();
-                case FactoryFrameworkElementTypes.MessageFieldImage:
+                case MessengerDialogMessagesWPFElementTypes.MessageFieldImage:
                     return CreateMessageFieldImage((byte[])_RequestInfo.lParam, (double)_RequestInfo.wParam);
-                case FactoryFrameworkElementTypes.URLHyperLinkTextBlock:
+                case MessengerDialogMessagesWPFElementTypes.URLHyperLinkTextBlock:
                     return CreateURLHyperLinkTextBlock((string)_RequestInfo.lParam);
-                case FactoryFrameworkElementTypes.MessageFieldFileStackPanel:
+                case MessengerDialogMessagesWPFElementTypes.MessageFieldFileStackPanel:
                     return CreateMessageFieldFileStackPanel((MessengerDialogMessageAttachment)_RequestInfo.lParam);
-                case FactoryFrameworkElementTypes.ButtonCheckMessages:
+                case MessengerDialogMessagesWPFElementTypes.ButtonCheckMessages:
                     return CreateButtonCheckMessages((Action<object, RoutedEventArgs>)_RequestInfo.lParam);
-                case FactoryFrameworkElementTypes.URLHyperLinkStackPanel:
+                case MessengerDialogMessagesWPFElementTypes.URLHyperLinkStackPanel:
                     return CreateURLHyperLinkStackPanel((string)_RequestInfo.lParam);
                 default:
                     throw new NotImplementedException(
-                        $"Элемент типа: {(FactoryFrameworkElementTypes)_RequestInfo.ElementType} не поддерживается данной фабрикой!");
+                        $"Элемент типа: {(MessengerDialogMessagesWPFElementTypes)_RequestInfo.ElementType} не поддерживается данной фабрикой!");
             }
         }
         //--------------------------------------------------------------
@@ -551,7 +551,7 @@ namespace MessengerDialogMessagesWPF.Factory
 
             _ResultControl.HorizontalAlignment = HorizontalAlignment.Center;
 
-            FrameworkElement _URLHyperLinkTextBlock = Create(new RequestInfo((uint)FactoryFrameworkElementTypes.URLHyperLinkTextBlock, _MessageURL));
+            FrameworkElement _URLHyperLinkTextBlock = Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.URLHyperLinkTextBlock, _MessageURL));
 
             _ResultControl.Children.Add(_URLHyperLinkTextBlock);
 

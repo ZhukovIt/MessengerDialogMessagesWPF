@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MessengerDialogMessagesWPF.Factory
 {
-    public enum FactoryFrameworkElementTypes
+    public enum MessengerDialogMessagesWPFElementTypes : uint
     {
         NewMessagesGrid = 1,
         DepartureDateTextBox,

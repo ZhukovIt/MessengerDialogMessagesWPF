@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessengerDialogMessagesWPF.Factory;
 
 namespace MessengerDialogMessagesWPF
 {
@@ -18,9 +19,16 @@ namespace MessengerDialogMessagesWPF
     /// </summary>
     public partial class BackgroundPanelMessagesWPF : UserControl
     {
+        private AbstractWPFCreator m_Factory;
+        //-----------------------------------------------------------------------------------
         public BackgroundPanelMessagesWPF()
         {
             InitializeComponent();
+        }
+        //-----------------------------------------------------------------------------------
+        public void Init(IEnumerable<MessengerDialogMessage> _Messages)
+        {
+            m_Factory = new BackgroundPanelMessagesWPFFactory(Resources);
         }
         //-----------------------------------------------------------------------------------
     }

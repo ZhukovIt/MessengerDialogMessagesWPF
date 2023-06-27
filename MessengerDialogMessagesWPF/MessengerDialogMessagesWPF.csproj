@@ -50,7 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory\AbstractWPFCreator.cs" />
-    <Compile Include="Factory\FactoryFrameworkElementTypes.cs" />
+    <Compile Include="Factory\BackgroundPanelDialogsWPFElementTypes.cs" />
+    <Compile Include="Factory\BackgroundPanelDialogsWPFFactory.cs" />
+    <Compile Include="Factory\BackgroundPanelMessagesWPFElementTypes.cs" />
+    <Compile Include="Factory\BackgroundPanelMessagesWPFFactory.cs" />
+    <Compile Include="Factory\MessengerDialogMessagesWPFElementTypes.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFFactory.cs" />
     <Compile Include="Service\IMessengerService.cs" />
     <Compile Include="Service\MessengerDialogMessagesWPFService.cs" />
@@ -155,16 +159,10 @@
     <Resource Include="Resources\VectorVk.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="GUI\UserControls\swap_user.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\swap_user.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SendMessage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="GUI\UserControls\SendMessage.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\white_close_window.png" />
@@ -174,9 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\white_expand_window.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="GUI\UserControls\businessman48.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\back_to_dialogs.png" />

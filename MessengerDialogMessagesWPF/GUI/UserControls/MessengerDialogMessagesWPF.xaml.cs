@@ -98,13 +98,13 @@ namespace MessengerDialogMessagesWPF
 
             if (NeedRenderNewMessagesElements && _MessageTypeWPF == MessageTypeWPF.Income)
             {
-                Grid _NewMessagesGrid = (Grid)m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.NewMessagesGrid));
+                Grid _NewMessagesGrid = (Grid)m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.NewMessagesGrid));
 
                 _NewMessagesGrid.SizeChanged += NewMessagesGrid_SizeChanged;
 
                 spMessages.Children.Add(_NewMessagesGrid);
 
-                spMessages.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.DepartureDateTextBox, 
+                spMessages.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureDateTextBox, 
                     _Message.DepartureDate, true)));
 
                 AddNewMainStackPanelDelegate.Invoke();
@@ -175,7 +175,7 @@ namespace MessengerDialogMessagesWPF
                     {
                         if (((MessengerDialogMessagesWPFService)m_MessengerService).IsShowAttachmentFromFileType(_Attachment.Type))
                         {
-                            Image _MessageFieldImage = (Image)m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageFieldImage,
+                            Image _MessageFieldImage = (Image)m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldImage,
                                 Convert.FromBase64String(_Attachment.Data), m_FactHeight));
 
                             _MessageFieldImage.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Image_PreviewMouseLeftButtonDown);
@@ -184,7 +184,7 @@ namespace MessengerDialogMessagesWPF
                         }
                         else
                         {
-                            _Parent.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageFieldFileStackPanel,
+                            _Parent.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldFileStackPanel,
                                 _Attachment)));
                         }
                     }
@@ -193,7 +193,7 @@ namespace MessengerDialogMessagesWPF
 
             _Parent.Children.Remove(findSP);
 
-            _Parent.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.DepartureTimeAndStatusStackPanel, 
+            _Parent.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureTimeAndStatusStackPanel, 
                 MessageTypeWPF.Outgoing, _MessengerDialogMessage)));
         }
         //--------------------------------------------------------------
@@ -276,7 +276,7 @@ namespace MessengerDialogMessagesWPF
             {
                 if (item.Key)
                 {
-                    Grid _NewMessagesGrid = (Grid)m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.NewMessagesGrid));
+                    Grid _NewMessagesGrid = (Grid)m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.NewMessagesGrid));
 
                     _NewMessagesGrid.SizeChanged += NewMessagesGrid_SizeChanged;
 
@@ -293,7 +293,7 @@ namespace MessengerDialogMessagesWPF
 
             foreach (var item in groupedMessages)
             {
-                spMessages.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.DepartureDateTextBox, item.Key, _IsNew)));
+                spMessages.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureDateTextBox, item.Key, _IsNew)));
 
                 MessageTypeWPF? currentMessageType = null;
                 MessageTypeWPF? lastMessageType = null;
@@ -345,21 +345,21 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.Orientation = Orientation.Vertical;
 
-            FrameworkElement _MessageFieldTextBox = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageFieldTextBox, 
+            FrameworkElement _MessageFieldTextBox = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldTextBox, 
                 _MessageTypeWPF, _Message.TextMessage));
 
             _ResultControl.Children.Add(_MessageFieldTextBox);
 
             if (m_MessageHasAttachment && _Message.NeedProxyAttachment)
             {
-                _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.ProxyAttachmentTextBlock)));
+                _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.ProxyAttachmentTextBlock)));
             }
 
             foreach (MessengerDialogMessageAttachment _Attachment in _Message.Attachments)
             {
                 if (((MessengerDialogMessagesWPFService)m_MessengerService).IsShowAttachmentFromFileType(_Attachment.Type))
                 {
-                    Image _MessageFieldImage = (Image)m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageFieldImage,
+                    Image _MessageFieldImage = (Image)m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldImage,
                                 Convert.FromBase64String(_Attachment.Data), m_FactHeight));
 
                     _MessageFieldImage.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Image_PreviewMouseLeftButtonDown);
@@ -368,12 +368,12 @@ namespace MessengerDialogMessagesWPF
                 }
                 else
                 {
-                    _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageFieldFileStackPanel,
+                    _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldFileStackPanel,
                         _Attachment)));
                 }
             }
 
-            _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.DepartureTimeAndStatusStackPanel, 
+            _ResultControl.Children.Add(m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureTimeAndStatusStackPanel, 
                 _MessageTypeWPF, _Message)));
 
             return _ResultControl;
@@ -431,9 +431,9 @@ namespace MessengerDialogMessagesWPF
             {
                 m_MaxIndexIncomeSP++;
                 _Name = $"IncomeMessageOutgoingSP{m_MaxIndexIncomeSP}";
-                _CompanionNameTextBox = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.CompanionNameTextBox, 
+                _CompanionNameTextBox = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.CompanionNameTextBox, 
                     _MessageTypeWPF, _Messages[0].ClientName));
-                _MessageSourceTextBox = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageSourceTextBox,
+                _MessageSourceTextBox = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageSourceTextBox,
                     _MessageTypeWPF, Tuple.Create(_Messages[0].MessageSourceClientView, m_MaxIndexIncomeSP, m_MaxIndexOutgoingSP)));
             }
 
@@ -441,9 +441,9 @@ namespace MessengerDialogMessagesWPF
             {
                 m_MaxIndexOutgoingSP++;
                 _Name = $"OutgoingMessageOutgoingSP{m_MaxIndexOutgoingSP}";
-                _CompanionNameTextBox = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.CompanionNameTextBox,
+                _CompanionNameTextBox = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.CompanionNameTextBox,
                     _MessageTypeWPF, _Messages[0].UserName));
-                _MessageSourceTextBox = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.MessageSourceTextBox,
+                _MessageSourceTextBox = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageSourceTextBox,
                     _MessageTypeWPF, Tuple.Create(_Messages[0].MessageSourceUserView, m_MaxIndexIncomeSP, m_MaxIndexOutgoingSP)));
             }
 
@@ -478,7 +478,7 @@ namespace MessengerDialogMessagesWPF
 
             _ResultControl.Orientation = Orientation.Horizontal;
 
-            FrameworkElement _ClientImageInEllipse = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.ClientImageInEllipse,
+            FrameworkElement _ClientImageInEllipse = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.ClientImageInEllipse,
                 _Messages[0].ClientPhoto));
 
             if (_MessageTypeWPF == MessageTypeWPF.Income)
@@ -521,7 +521,7 @@ namespace MessengerDialogMessagesWPF
             {
                 if (m_MessengerService.FindFrameworkElementFromKey(MainGrid, "btnCheckMessages") == null)
                 {
-                    Button btnCheckMessages = (Button)m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.ButtonCheckMessages));
+                    Button btnCheckMessages = (Button)m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.ButtonCheckMessages));
                     btnCheckMessages.Click += new RoutedEventHandler(btnCheckMessages_Click);
 
                     MainGrid.Children.Add(btnCheckMessages);
@@ -535,7 +535,7 @@ namespace MessengerDialogMessagesWPF
         {
             if (m_MessengerDialog.IsComment && _FirstMessage.URL != null)
             {
-                FrameworkElement _URLHyperLinkStackPanel = m_Factory.Create(new RequestInfo((uint)FactoryFrameworkElementTypes.URLHyperLinkStackPanel,
+                FrameworkElement _URLHyperLinkStackPanel = m_Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.URLHyperLinkStackPanel,
                     _FirstMessage.URL));
 
                 MainGrid.Children.Add(_URLHyperLinkStackPanel);
