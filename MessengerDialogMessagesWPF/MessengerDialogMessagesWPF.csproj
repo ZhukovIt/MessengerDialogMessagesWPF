@@ -49,6 +49,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\AbstractWPFCreator.cs" />
+    <Compile Include="Factory\FactoryFrameworkElementTypes.cs" />
+    <Compile Include="Factory\MessengerDialogMessagesWPFFactory.cs" />
+    <Compile Include="Service\IMessengerService.cs" />
+    <Compile Include="Service\MessengerDialogMessagesWPFService.cs" />
+    <Page Include="CommonResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,7 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="DataModel\MeasureTextWorker.cs" />
+    <Compile Include="DataModel\MessengerDialogForBackgroundPanel.cs" />
     <Compile Include="GUI\Preview\MessengerDialogMessagesWPFView.xaml.cs">
       <DependentUpon>MessengerDialogMessagesWPFView.xaml</DependentUpon>
     </Compile>
@@ -169,5 +178,12 @@
   <ItemGroup>
     <Resource Include="GUI\UserControls\businessman48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\back_to_dialogs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\show_all_dialogs_as_list.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

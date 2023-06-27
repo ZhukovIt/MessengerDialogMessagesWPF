@@ -8,6 +8,14 @@
         mc:Ignorable="d"
         d:DesignHeight="360" d:DesignWidth="225">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../CommonResources.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Border BorderThickness="1">
         <Border.BorderBrush>
             <SolidColorBrush Color="Black" Opacity="0.25"></SolidColorBrush>
@@ -31,21 +39,21 @@
                    FontSize="15" FontFamily="Inter" FontWeight="DemiBold" LineHeight="18.15"
                    Width="40" Height="18" Margin="0, 0, 0, 3"><Run Text="Чаты"/></TextBlock>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
+                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../collapse_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand">
+                <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../expand_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand">
+                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../close_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
@@ -65,7 +73,7 @@
                         </Grid.Effect>
                     </Grid>
 
-                    <Grid Cursor="Hand">
+                    <Grid Cursor="Hand" MouseDown="MessengerDialogGrid_MouseDown" x:Name="MessengerDialogGrid_1">
                         <Grid.Background>
                             <SolidColorBrush Color="#ACE1FE" Opacity="0.38"></SolidColorBrush>
                         </Grid.Background>
@@ -101,7 +109,7 @@
                         <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0, 0, 8, 0"
                     Width="18" Height="18" CornerRadius="9" Background="#587EDF" HorizontalAlignment="Right">
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"
-                                   FontFamily="Inter" FontStyle="Normal" FontWeight="DemiBold"  FontSize="10" LineHeight="12">10</TextBlock>
+                                   FontFamily="Inter" FontStyle="Normal" FontWeight="DemiBold" FontSize="10" LineHeight="12">10</TextBlock>
                         </Border>
                         <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                     Margin="10, 5, 1, 4" TextWrapping="Wrap" FontFamily="Inter" FontSize="10" LineHeight="12.1" FontWeight="Normal">
@@ -115,7 +123,7 @@
                         </Grid.Effect>
                     </Grid>
 
-                    <Grid Cursor="Hand">
+                    <Grid Cursor="Hand" MouseDown="MessengerDialogGrid_MouseDown" x:Name="MessengerDialogGrid_2">
                         <Grid.Background>
                             <SolidColorBrush Color="#ACE1FE" Opacity="0.38"></SolidColorBrush>
                         </Grid.Background>
@@ -165,7 +173,7 @@
                         </Grid.Effect>
                     </Grid>
 
-                    <Grid Cursor="Hand">
+                    <Grid Cursor="Hand" MouseDown="MessengerDialogGrid_MouseDown" x:Name="MessengerDialogGrid_3">
                         <Grid.Background>
                             <SolidColorBrush Color="#ACE1FE" Opacity="0.38"></SolidColorBrush>
                         </Grid.Background>

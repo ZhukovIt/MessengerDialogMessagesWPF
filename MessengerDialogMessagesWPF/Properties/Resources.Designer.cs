@@ -63,6 +63,16 @@ namespace MessengerDialogMessagesWPF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap back_to_dialogs {
+            get {
+                object obj = ResourceManager.GetObject("back_to_dialogs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap businessman48 {
             get {
                 object obj = ResourceManager.GetObject("businessman48", resourceCulture);
@@ -136,6 +146,16 @@ namespace MessengerDialogMessagesWPF.Properties {
         internal static System.Drawing.Bitmap SendMessage {
             get {
                 object obj = ResourceManager.GetObject("SendMessage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap show_all_dialogs_as_list {
+            get {
+                object obj = ResourceManager.GetObject("show_all_dialogs_as_list", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

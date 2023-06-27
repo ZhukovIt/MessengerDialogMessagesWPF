@@ -8,64 +8,13 @@
              d:DesignHeight="570" d:DesignWidth="850">
 
     <UserControl.Resources>
-
-        <Style x:Key="tBoxMessageFieldStyle" TargetType="TextBox">
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontFamily" Value="Times New Roman" />
-        </Style>
-
-        <Style x:Key="tBoxBorderMessageFieldStyle" TargetType="Border">
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="Margin" Value="0, 0, 0, -15" />
-        </Style>
-
-        <ControlTemplate TargetType="Button" x:Key="btnCheckMessages">
-            <Border CornerRadius="11" BorderThickness="2" BorderBrush="Black" Background="White" Width="300" Height="auto" Margin="0, 5, 0, 5">
-                <ContentControl Margin="0, 5, 0, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman" Content="{TemplateBinding Content}"></ContentControl>
-            </Border>
-        </ControlTemplate>
-
-        <ControlTemplate TargetType="TextBox" x:Key="tBoxDateTemplate">
-            <Border CornerRadius="12" BorderBrush="#dbdbdb" Background="#f0eded" Height="28" Width="150" Margin="10">
-                <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Text}" FontSize="14" FontFamily="Times New Roman"></ContentControl>
-            </Border>
-
-
-        </ControlTemplate>
-
-        <ControlTemplate TargetType="TextBox" x:Key="tBoxUserClientNameTemplate">
-            <Border BorderThickness="0" Margin="{TemplateBinding Margin}">
-                <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="Center" 
-                                Content="{TemplateBinding Text}" FontSize="16" 
-                                FontFamily="Times New Roman"
-                                FontWeight="Bold"></ContentControl>
-            </Border>
-        </ControlTemplate>
-
-
-
-        <ControlTemplate TargetType="TextBox" x:Key="tBoxDepartureTimeTemplate">
-            <Border BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="{TemplateBinding Margin}">
-                <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
-            </Border>
-        </ControlTemplate>
-
-        <ControlTemplate TargetType="TextBox" x:Key="tBoxMessageSourceTemplate">
-            <Border BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="{TemplateBinding Margin}">
-                <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
-            </Border>
-        </ControlTemplate>
-
-    </UserControl.Resources>
-
-
-
-
-
-
-
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../CommonResources.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>    
+    
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
