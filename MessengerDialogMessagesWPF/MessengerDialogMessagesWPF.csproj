@@ -49,6 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\MessengerDialogMessagesWPFInfo.cs" />
     <Compile Include="Factory\AbstractWPFCreator.cs" />
     <Compile Include="Factory\BackgroundPanelDialogsWPFElementTypes.cs" />
     <Compile Include="Factory\BackgroundPanelDialogsWPFFactory.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Factory\BackgroundPanelMessagesWPFFactory.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFElementTypes.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFFactory.cs" />
-    <Compile Include="Service\IMessengerService.cs" />
+    <Compile Include="Service\CommonMessengerService.cs" />
     <Compile Include="Service\MessengerDialogMessagesWPFService.cs" />
     <Page Include="CommonResources.xaml">
       <SubType>Designer</SubType>

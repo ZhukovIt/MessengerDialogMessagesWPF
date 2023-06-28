@@ -20,6 +20,10 @@ namespace MessengerDialogMessagesWPF.Factory
         URLHyperLinkTextBlock,
         MessageFieldFileStackPanel,
         ButtonCheckMessages,
-        URLHyperLinkStackPanel
+        URLHyperLinkStackPanel,
+        MessageFieldStackPanel,
+        MessageFieldStackPanelInBorder,
+        MessageOutgoingStackPanel,
+        MessageMainStackPanel
     }
 }

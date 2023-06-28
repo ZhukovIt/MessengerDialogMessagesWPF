@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessengerDialogMessagesWPF.Factory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,74 +9,272 @@ using System.Windows.Controls;
 
 namespace MessengerDialogMessagesWPF.Service
 {
-    public sealed class MessengerDialogMessagesWPFService : IMessengerService
+    public sealed class MessengerDialogMessagesWPFService : CommonMessengerService
     {
-        public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
+        private MessengerDialogMessagesWPF m_MainControl;
+        //--------------------------------------------------------------
+        public MessengerDialogMessagesWPFService(MessengerDialogMessagesWPF _MainControl)
         {
-            throw new NotImplementedException();
+            m_MainControl = _MainControl;
         }
         //--------------------------------------------------------------
-        public void UpdateMessage(MessengerDialogMessage _Message)
+        public override void AddMessage(Panel _Container, MessengerDialogMessage _Message, bool _HasAttachment)
         {
-            throw new NotImplementedException();
-        }
-        //--------------------------------------------------------------
-        public FrameworkElement FindFrameworkElementFromKey(Panel _Parent, string _Key)
-        {
-            FrameworkElement findFrameworkElement;
-
-            foreach (FrameworkElement element in _Parent.Children)
+            m_MainControl.Info.MessageHasAttachment = _HasAttachment;
+            MessageTypeWPF _MessageTypeWPF = _Message.MessageTypeWPF;
+            Action AddNewMainStackPanelDelegate = new Action(() =>
             {
-                findFrameworkElement = HandleElementForFindFrameworkElement(element, _Key);
+                _Container.Children.Add(m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageMainStackPanel,
+                    _MessageTypeWPF, new List<MessengerDialogMessage>() { _Message })));
+            });
 
-                if (findFrameworkElement.Name == _Key)
+            bool NeedRenderNewMessagesElements = !HasNameFrameworkElementInElements(_Container.Children, "NewMessagesGrid");
+
+            if (_MessageTypeWPF == MessageTypeWPF.Income)
+            {
+                m_MainControl.Info.MessengerDialog.IsRead = false;
+            }
+            else if (!NeedRenderNewMessagesElements)
+            {
+                m_MainControl.HandlebtnCheckMessages_Click();
+            }
+            else
+            {
+                m_MainControl.Info.MessengerDialog.IsRead = true;
+            }
+
+            if (NeedRenderNewMessagesElements && _MessageTypeWPF == MessageTypeWPF.Income)
+            {
+                Grid _NewMessagesGrid = (Grid)m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.NewMessagesGrid));
+
+                m_MainControl.SetNewMessagesGrid_SizeChanged(_NewMessagesGrid);
+
+                _Container.Children.Add(_NewMessagesGrid);
+
+                _Container.Children.Add(m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureDateTextBox,
+                    _Message.DepartureDate, true)));
+
+                AddNewMainStackPanelDelegate.Invoke();
+            }
+            else if (_MessageTypeWPF == MessageTypeWPF.Income && m_MainControl.Info.MaxIndexIncomeSP == 0)
+            {
+                AddNewMainStackPanelDelegate.Invoke();
+            }
+            else if (_MessageTypeWPF == MessageTypeWPF.Outgoing && m_MainControl.Info.MaxIndexOutgoingSP == 0)
+            {
+                AddNewMainStackPanelDelegate.Invoke();
+            }
+            else
+            {
+                FrameworkElement _LastMainStackPanel = GetLastMainStackPanelFromMessageTypeWPF(_MessageTypeWPF, _Container);
+
+                if (_LastMainStackPanel == null)
                 {
-                    return findFrameworkElement;
+                    AddNewMainStackPanelDelegate.Invoke();
+                }
+                else
+                {
+                    StackPanel findSP = (StackPanel)_LastMainStackPanel;
+
+                    FrameworkElement tempRemovedElement = null;
+
+                    foreach (FrameworkElement element in findSP.Children)
+                    {
+                        if (element.Name.StartsWith("MessageSourceTextBoxIncome") || element.Name.StartsWith("MessageSourceTextBoxOutgoing"))
+                        {
+                            tempRemovedElement = element;
+                            break;
+                        }
+                    }
+
+                    findSP.Children.Remove(tempRemovedElement);
+
+                    findSP.Children.Add(m_MainControl.Factory.Create(new RequestInfo(
+                        (uint)MessengerDialogMessagesWPFElementTypes.MessageFieldStackPanelInBorder,
+                        _MessageTypeWPF,
+                        Tuple.Create(_Message, 5, m_MainControl.Info.FactHeight))));
+
+                    findSP.Children.Add(tempRemovedElement);
                 }
             }
 
-            return null;
+            m_MainControl.ScrollToEndForMainScrollViewer();
+
+            m_MainControl.Info.MessageHasAttachment = false;
         }
         //--------------------------------------------------------------
-        public bool IsShowAttachmentFromFileType(string _FileType)
+        public override void UpdateMessage(Panel _Container, MessengerDialogMessage _Message)
         {
-            switch (_FileType)
+            StackPanel findSP = (StackPanel)FindFrameworkElementFromKey(_Container, $"DepartureTimeAndStatusSP{_Message.Id}");
+
+            StackPanel _Parent = (StackPanel)findSP.Parent;
+
+            TextBlock _ProxyAttachment = (TextBlock)FindFrameworkElementFromKey(_Parent, "ProxyAttachment");
+
+            if (_ProxyAttachment != null)
             {
-                case "jpg":
-                case "jpeg":
-                case "png":
-                case "ico":
-                case "gif":
-                case "svg":
-                case "bmp":
-                case "tiff":
-                case "photo":
-                case "sticker":
-                    return true;
-                default:
-                    return false;
+                if (_Message.StatusMessage == MessageStatusTypeWPF.NotDelivered)
+                {
+                    _ProxyAttachment.Text = "Вложение не загружено!";
+                }
+                else
+                {
+                    _Parent.Children.Remove(_ProxyAttachment);
+
+                    foreach (MessengerDialogMessageAttachment _Attachment in _Message.Attachments)
+                    {
+                        if (IsShowAttachmentFromFileType(_Attachment.Type))
+                        {
+                            Image _MessageFieldImage = (Image)m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldImage,
+                                Convert.FromBase64String(_Attachment.Data), m_MainControl.Info.FactHeight));
+
+                            m_MainControl.SetImage_PreviewMouseLeftButtonDown(_MessageFieldImage);
+
+                            _Parent.Children.Add(_MessageFieldImage);
+                        }
+                        else
+                        {
+                            _Parent.Children.Add(m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.MessageFieldFileStackPanel,
+                                _Attachment)));
+                        }
+                    }
+                }
+            }
+
+            _Parent.Children.Remove(findSP);
+
+            _Parent.Children.Add(m_MainControl.Factory.Create(new RequestInfo((uint)MessengerDialogMessagesWPFElementTypes.DepartureTimeAndStatusStackPanel,
+                MessageTypeWPF.Outgoing, _Message)));
+        }
+        //--------------------------------------------------------------
+        public override void Clear(Panel _Container)
+        {
+            var btnCheckMessages = FindFrameworkElementFromKey(_Container, "btnCheckMessages");
+
+            if (btnCheckMessages != null)
+            {
+                _Container.Children.Remove(btnCheckMessages);
+            }
+
+            var urlHyperLinkStackPanel = FindFrameworkElementFromKey(_Container, "URLHyperLinkStackPanel");
+
+            if (urlHyperLinkStackPanel != null)
+            {
+                _Container.Children.Remove(urlHyperLinkStackPanel);
+            }
+        }
+        //--------------------------------------------------------------
+        public void GroupMessagesFromIsNewState(IEnumerable<MessengerDialogMessage> _Messages, Panel _Container)
+        {
+            IEnumerable<IGrouping<bool, MessengerDialogMessage>> groupedMessages = _Messages.GroupBy(m => m.IsNewMessage);
+
+            foreach (var item in groupedMessages)
+            {
+                if (item.Key)
+                {
+                    Grid _NewMessagesGrid = (Grid)m_MainControl.Factory.Create(new RequestInfo(
+                        (uint)MessengerDialogMessagesWPFElementTypes.NewMessagesGrid));
+
+                    m_MainControl.SetNewMessagesGrid_SizeChanged(_NewMessagesGrid);
+
+                    _Container.Children.Add(_NewMessagesGrid);
+                }
+
+                GroupMessagesFromDepartureDate(item.ToList(), _Container, item.Key);
             }
         }
         //--------------------------------------------------------------
         #region Детали имплементации сервиса
         //--------------------------------------------------------------
-        private FrameworkElement HandleElementForFindFrameworkElement(FrameworkElement element, string _Key)
+        private FrameworkElement GetLastMainStackPanelFromMessageTypeWPF(MessageTypeWPF _MessageTypeWPF, Panel _Container)
         {
-            if (element is Border)
-            {
-                return HandleElementForFindFrameworkElement((FrameworkElement)(element as Border).Child, _Key);
-            }
-            else if (element is Panel)
-            {
-                FrameworkElement findElement = FindFrameworkElementFromKey(element as Panel, _Key);
+            string _IncomeKeyToFind = "IncomeMessageOutgoingSP" + m_MainControl.Info.MaxIndexIncomeSP.ToString();
+            string _OutgoingKeyToFind = "OutgoingMessageOutgoingSP" + m_MainControl.Info.MaxIndexOutgoingSP.ToString();
+            int _Count = _Container.Children.Count;
 
-                if (findElement != null)
+            for (int i = _Count - 1; i >= 0; i--)
+            {
+                UIElement temp = _Container.Children[i];
+
+                if (temp is Panel)
                 {
-                    return findElement;
+                    FrameworkElement _IncomeFE = FindFrameworkElementFromKey((Panel)temp, _IncomeKeyToFind);
+                    FrameworkElement _OutgoingFE = FindFrameworkElementFromKey((Panel)temp, _OutgoingKeyToFind);
+
+                    if (_IncomeFE == null && _OutgoingFE == null)
+                    {
+                        continue;
+                    }
+                    else if (_MessageTypeWPF == MessageTypeWPF.Income && _IncomeFE != null)
+                    {
+                        return _IncomeFE;
+                    }
+                    else if (_MessageTypeWPF == MessageTypeWPF.Outgoing && _OutgoingFE != null)
+                    {
+                        return _OutgoingFE;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
+            return null;
+        }
+        //--------------------------------------------------------------
+        private void GroupMessagesFromDepartureDate(IEnumerable<MessengerDialogMessage> _Messages, Panel _Container, bool _IsNew)
+        {
+            IEnumerable<IGrouping<string, MessengerDialogMessage>> groupedMessages = _Messages.GroupBy(m => m.DepartureDate);
 
-            return element;
+            foreach (var item in groupedMessages)
+            {
+                _Container.Children.Add(m_MainControl.Factory.Create(new RequestInfo(
+                    (uint)MessengerDialogMessagesWPFElementTypes.DepartureDateTextBox, item.Key, _IsNew)));
+
+                MessageTypeWPF? currentMessageType = null;
+                MessageTypeWPF? lastMessageType = null;
+                string currentSecUserFIO = null;
+                string lastSecUserFIO = null;
+                List<MessengerDialogMessage> messages = new List<MessengerDialogMessage>();
+
+                foreach (MessengerDialogMessage message in item)
+                {
+                    currentMessageType = message.MessageTypeWPF;
+                    currentSecUserFIO = message.UserName;
+
+                    if (lastMessageType == null)
+                    {
+                        messages.Add(message);
+                    }
+                    else if (currentMessageType == lastMessageType && currentSecUserFIO == lastSecUserFIO)
+                    {
+                        messages.Add(message);
+                    }
+                    else
+                    {
+                        if (messages.Count > 0)
+                        {
+                            _Container.Children.Add(m_MainControl.Factory.Create(new RequestInfo(
+                                (uint)MessengerDialogMessagesWPFElementTypes.MessageMainStackPanel,
+                                (MessageTypeWPF)lastMessageType, messages)));
+                        }
+
+                        messages.Clear();
+
+                        messages.Add(message);
+                    }
+
+                    lastMessageType = message.MessageTypeWPF;
+                    lastSecUserFIO = message.UserName;
+                }
+
+                if (messages.Count > 0)
+                {
+                    _Container.Children.Add(m_MainControl.Factory.Create(new RequestInfo(
+                        (uint)MessengerDialogMessagesWPFElementTypes.MessageMainStackPanel,
+                        (MessageTypeWPF)currentMessageType, messages)));
+                }
+            }
         }
         //--------------------------------------------------------------
         #endregion
