@@ -22,6 +22,7 @@ namespace MessengerDialogMessagesWPF
     public partial class BackgroundPanelDialogsWPF : UserControl
     {
         private AbstractWPFCreator m_Factory;
+        private Action m_btnClose_Click;
         //------------------------------------------------------------------
         public BackgroundPanelDialogsWPF()
         {
@@ -45,6 +46,13 @@ namespace MessengerDialogMessagesWPF
             }
         }
         //------------------------------------------------------------------
+        public void InitHandlers(Action _btnClose_Click)
+        {
+            m_btnClose_Click = _btnClose_Click;
+        }
+        //------------------------------------------------------------------
+        #region Обработчики событий
+        //------------------------------------------------------------------
         private void MessengerDialogGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -56,6 +64,13 @@ namespace MessengerDialogMessagesWPF
                 MessageBox.Show($"Диалог №{_MessengerDialogId}");
             }
         }
+        //------------------------------------------------------------------
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            m_btnClose_Click.Invoke();
+        }
+        //------------------------------------------------------------------
+        #endregion
         //------------------------------------------------------------------
     }
 }

@@ -115,13 +115,15 @@
 
     <ControlTemplate TargetType="Button" x:Key="btnCheckMessages">
         <Border CornerRadius="11" BorderThickness="2" BorderBrush="Black" Background="White" Width="300" Height="auto" Margin="0, 5, 0, 5">
-            <ContentControl Margin="0, 5, 0, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman" Content="{TemplateBinding Content}"></ContentControl>
+            <ContentControl Margin="0, 5, 0, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" 
+                            FontFamily="Times New Roman" Content="{TemplateBinding Content}"></ContentControl>
         </Border>
     </ControlTemplate>
 
     <ControlTemplate TargetType="TextBox" x:Key="tBoxDateTemplate">
         <Border CornerRadius="12" BorderBrush="#dbdbdb" Background="#f0eded" Height="28" Width="150" Margin="10">
-            <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Text}" FontSize="14" FontFamily="Times New Roman"></ContentControl>
+            <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Text}" 
+                            FontSize="14" FontFamily="Times New Roman"></ContentControl>
         </Border>
     </ControlTemplate>
 
@@ -136,14 +138,15 @@
 
     <ControlTemplate TargetType="TextBox" x:Key="tBoxDepartureTimeTemplate">
         <Border BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="{TemplateBinding Margin}">
-            <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
+            <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" 
+                            FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
         </Border>
     </ControlTemplate>
 
     <ControlTemplate TargetType="TextBox" x:Key="tBoxMessageSourceTemplate">
         <Border BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="{TemplateBinding Margin}">
-            <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
+            <ContentControl HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Content="{TemplateBinding Text}" FontSize="12" 
+                            FontFamily="Times New Roman" Foreground="#b6b9b4"></ContentControl>
         </Border>
     </ControlTemplate>
-
 </ResourceDictionary>

@@ -8,6 +8,6 @@ namespace MessengerDialogMessagesWPF.Factory
 {
     public enum BackgroundPanelMessagesWPFElementTypes : uint
     {
-        
+        BorderDepartureDate = 1
     }
 }

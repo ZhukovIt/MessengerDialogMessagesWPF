@@ -40,21 +40,22 @@
                    Width="40" Height="18" Margin="0, 0, 0, 3"><Run Text="Чаты"/></TextBlock>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
                 <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../collapse_window15.png" Stretch="UniformToFill">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/collapse_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
                 <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../expand_window15.png" Stretch="UniformToFill">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/expand_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../close_window15.png" Stretch="UniformToFill">
+                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}" x:Name="btnClose" Click="btnClose_Click">
+                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/close_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
@@ -191,7 +192,7 @@
                         </Grid.ColumnDefinitions>
                         <Ellipse Width="20" Height="20" VerticalAlignment="Center" Margin="10, 0, 7, 0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="businessman48.png">
+                                <ImageBrush ImageSource="../../Resources/businessman48.png">
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>

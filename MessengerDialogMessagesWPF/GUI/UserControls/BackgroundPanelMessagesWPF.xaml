@@ -34,7 +34,7 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="3"/>
                 <RowDefinition/>
-                <RowDefinition Height="45"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="42"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
@@ -170,10 +170,10 @@
                     <ColumnDefinition Width="33"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="28"></RowDefinition>
+                    <RowDefinition Height="18"></RowDefinition>
                     <RowDefinition Height="17"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#E97C7C" Margin="12, 18, 0, 0"
+                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#E97C7C" Margin="12, 8, 0, 0"
                        FontFamily="Inter" FontSize="8" FontStyle="Normal" FontWeight="Normal" LineHeight="8.47">
                 С диалогом работает пользователь:
                 </TextBlock>
@@ -182,8 +182,8 @@
                 Агнесса Карпова
                 </TextBlock>
                 <Button Style="{StaticResource btnNotMouseOver}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="22" Height="22" Cursor="Hand"
-                        VerticalAlignment="Top" Margin="0, 19, 11, 0" BorderThickness="0" Background="White" Padding="0">
-                    <Image Source="../../Resources/swap_user.png" Width="20" Height="20" Margin="0, 0, 0, 0"
+                        VerticalAlignment="Top" Margin="0, 9, 11, 0" BorderThickness="0" Background="White" Padding="0">
+                    <Image Source="../../Resources/swap_user.png" Width="20" Height="20"
                            VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>

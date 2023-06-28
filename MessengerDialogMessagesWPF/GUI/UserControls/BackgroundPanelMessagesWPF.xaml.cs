@@ -28,7 +28,7 @@ namespace MessengerDialogMessagesWPF
         //-----------------------------------------------------------------------------------
         public void Init(IEnumerable<MessengerDialogMessage> _Messages)
         {
-            m_Factory = new BackgroundPanelMessagesWPFFactory(Resources);
+            m_Factory = new BackgroundPanelMessagesWPFFactory(this, Resources);
         }
         //-----------------------------------------------------------------------------------
     }

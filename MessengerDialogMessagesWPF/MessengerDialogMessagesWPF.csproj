@@ -133,9 +133,6 @@
     <Resource Include="Resources\message_not_delivered16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="collapse_window15.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\close_window15.png" />
   </ItemGroup>
   <ItemGroup>
@@ -143,12 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\expand_window15.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="expand_window15.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="close_window15.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\businessman48.png" />
