@@ -173,6 +173,16 @@ namespace MessengerDialogMessagesWPF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap telegramm {
+            get {
+                object obj = ResourceManager.GetObject("telegramm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap VectorVk {
             get {
                 object obj = ResourceManager.GetObject("VectorVk", resourceCulture);

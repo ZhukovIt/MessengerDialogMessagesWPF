@@ -171,6 +171,8 @@
   <ItemGroup>
     <Resource Include="Resources\show_all_dialogs_as_list.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\telegramm.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

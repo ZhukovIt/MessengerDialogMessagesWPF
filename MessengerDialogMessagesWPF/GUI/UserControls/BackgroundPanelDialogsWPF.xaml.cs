@@ -23,14 +23,81 @@ namespace MessengerDialogMessagesWPF
     {
         private AbstractWPFCreator m_Factory;
         private Action m_btnClose_Click;
+        private Point m_LastLocation;
         //------------------------------------------------------------------
         public BackgroundPanelDialogsWPF()
         {
             InitializeComponent();
+
+            MemoryStream stream1 = null;
+            MemoryStream stream2 = null;
+            byte[] _ClientPhoto;
+            byte[] _MessengerIcon;
+
+            try
+            {
+                stream1 = new MemoryStream();
+                stream1.Position = 0;
+                var _ClientImage = System.Drawing.Image.FromFile(@"C:\Users\SM11\Desktop\WPF Messages\MessengerDialogMessagesWPF\MessengerDialogMessagesWPF\Resources\businessman48.png");
+                _ClientImage.Save(stream1, System.Drawing.Imaging.ImageFormat.Png);
+                _ClientPhoto = stream1.ToArray();
+
+                stream2 = new MemoryStream();
+                stream2.Position = 0;
+                var _MessengerImage = System.Drawing.Image.FromFile(@"C:\Users\SM11\Desktop\WPF Messages\MessengerDialogMessagesWPF\MessengerDialogMessagesWPF\Resources\vk.png");
+                _MessengerImage.Save(stream2, System.Drawing.Imaging.ImageFormat.Png);
+                _MessengerIcon = stream2.ToArray();
+            }
+            finally
+            {
+                stream1.Dispose();
+                stream2.Dispose();
+            }
+
+            List<MessengerDialogForBackgroundPanel> _MessengerDialogs = new List<MessengerDialogForBackgroundPanel>()
+            {
+                new MessengerDialogForBackgroundPanel()
+                {
+                    ClientName = "Пациент№1",
+                    CountMessages = "5",
+                    ClientPhoto = _ClientPhoto,
+                    DialogDateTime = "06:12 29.06.2023",
+                    LastMessageText = "Тест1",
+                    MessengerDialogId = 1,
+                    MessengerImage = _MessengerIcon
+                },
+
+                new MessengerDialogForBackgroundPanel()
+                {
+                    ClientName = "Пациент№2",
+                    CountMessages = "3",
+                    ClientPhoto = _ClientPhoto,
+                    DialogDateTime = "07:33 29.06.2023",
+                    LastMessageText = "Тест2",
+                    MessengerDialogId = 2,
+                    MessengerImage = _MessengerIcon
+                },
+
+                new MessengerDialogForBackgroundPanel()
+                {
+                    ClientName = "Пациент№3",
+                    CountMessages = "25",
+                    ClientPhoto = _ClientPhoto,
+                    DialogDateTime = "07:55 29.06.2023",
+                    LastMessageText = "Тест3",
+                    MessengerDialogId = 3,
+                    MessengerImage = _MessengerIcon
+                }
+            };
+
+            Init(_MessengerDialogs, null);
         }
-        //------------------------------------------------------------------
-        public void Init(IEnumerable<MessengerDialogForBackgroundPanel> _MessengerDialogs)
+        //------------------------------------------------------------------  
+        public void Init(IEnumerable<MessengerDialogForBackgroundPanel> _MessengerDialogs,
+            Tuple<Action> _Handlers)
         {
+            //m_btnClose_Click = _Handlers.Item1;
+
             m_Factory = new BackgroundPanelDialogsWPFFactory(Resources);
 
             foreach (var _MessengerDialog in _MessengerDialogs)
@@ -44,11 +111,6 @@ namespace MessengerDialogMessagesWPF
                 spDialogs.Children.Add(_MessengerDialogGrid);
                 spDialogs.Children.Add(m_Factory.Create(new RequestInfo((uint)BackgroundPanelDialogsWPFElementTypes.DialogSeparatorGrid)));
             }
-        }
-        //------------------------------------------------------------------
-        public void InitHandlers(Action _btnClose_Click)
-        {
-            m_btnClose_Click = _btnClose_Click;
         }
         //------------------------------------------------------------------
         #region Обработчики событий

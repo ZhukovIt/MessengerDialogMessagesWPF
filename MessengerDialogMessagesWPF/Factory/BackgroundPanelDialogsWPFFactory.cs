@@ -260,7 +260,9 @@ namespace MessengerDialogMessagesWPF.Factory
 
             _ResultControl.Cursor = Cursors.Hand;
 
-            _ResultControl.Background = new SolidColorBrush(Color.FromArgb(97, 0xAC, 0xF1, 0xFE));
+            _ResultControl.Background = new SolidColorBrush(Color.FromRgb(0xAC, 0xE1, 0xFE));
+
+            _ResultControl.Background.Opacity = 0.38;
 
             RowDefinition firstRow = new RowDefinition();
             firstRow.Height = new GridLength(4);
@@ -272,7 +274,7 @@ namespace MessengerDialogMessagesWPF.Factory
             thirdRow.Height = new GridLength(12);
 
             RowDefinition fourthRow = new RowDefinition();
-            fourthRow.Height = new GridLength(100, GridUnitType.Auto);
+            fourthRow.Height = new GridLength(100, GridUnitType.Star);
 
             _ResultControl.RowDefinitions.Add(firstRow);
             _ResultControl.RowDefinitions.Add(secondRow);
@@ -283,7 +285,7 @@ namespace MessengerDialogMessagesWPF.Factory
             firstColumn.Width = new GridLength(37);
 
             ColumnDefinition secondColumn = new ColumnDefinition();
-            secondColumn.Width = new GridLength(100, GridUnitType.Auto);
+            secondColumn.Width = new GridLength(100, GridUnitType.Star);
 
             ColumnDefinition thirdColumn = new ColumnDefinition();
             thirdColumn.Width = new GridLength(26);
