@@ -39,14 +39,8 @@
                    FontSize="15" FontFamily="Inter" FontWeight="DemiBold" LineHeight="18.15"
                    Width="40" Height="18" Margin="0, 0, 0, 3"><Run Text="Чаты"/></TextBlock>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/collapse_window15.png" Stretch="UniformToFill">
-                        <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
-                        </Image.Effect>
-                    </Image>
-                </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
+                <Button Width="17" Height="17" BorderThickness="0" Background="White" Margin="0, 0, 1, 0" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}" Click="btnExpandWindow_Click">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/expand_window15.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>

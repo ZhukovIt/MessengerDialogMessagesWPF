@@ -23,87 +23,28 @@ namespace MessengerDialogMessagesWPF
     {
         private AbstractWPFCreator m_Factory;
         private Action m_btnClose_Click;
+        private Action m_btnExpandWindow_Click;
+        private Action<int> m_MessengerDialogGrid_MouseDown;
         private Point m_LastLocation;
         //------------------------------------------------------------------
         public BackgroundPanelDialogsWPF()
         {
             InitializeComponent();
-
-            MemoryStream stream1 = null;
-            MemoryStream stream2 = null;
-            byte[] _ClientPhoto;
-            byte[] _MessengerIcon;
-
-            try
-            {
-                stream1 = new MemoryStream();
-                stream1.Position = 0;
-                var _ClientImage = System.Drawing.Image.FromFile(@"C:\Users\SM11\Desktop\WPF Messages\MessengerDialogMessagesWPF\MessengerDialogMessagesWPF\Resources\businessman48.png");
-                _ClientImage.Save(stream1, System.Drawing.Imaging.ImageFormat.Png);
-                _ClientPhoto = stream1.ToArray();
-
-                stream2 = new MemoryStream();
-                stream2.Position = 0;
-                var _MessengerImage = System.Drawing.Image.FromFile(@"C:\Users\SM11\Desktop\WPF Messages\MessengerDialogMessagesWPF\MessengerDialogMessagesWPF\Resources\vk.png");
-                _MessengerImage.Save(stream2, System.Drawing.Imaging.ImageFormat.Png);
-                _MessengerIcon = stream2.ToArray();
-            }
-            finally
-            {
-                stream1.Dispose();
-                stream2.Dispose();
-            }
-
-            List<MessengerDialogForBackgroundPanel> _MessengerDialogs = new List<MessengerDialogForBackgroundPanel>()
-            {
-                new MessengerDialogForBackgroundPanel()
-                {
-                    ClientName = "Пациент№1",
-                    CountMessages = "5",
-                    ClientPhoto = _ClientPhoto,
-                    DialogDateTime = "06:12 29.06.2023",
-                    LastMessageText = "Тест1",
-                    MessengerDialogId = 1,
-                    MessengerImage = _MessengerIcon
-                },
-
-                new MessengerDialogForBackgroundPanel()
-                {
-                    ClientName = "Пациент№2",
-                    CountMessages = "3",
-                    ClientPhoto = _ClientPhoto,
-                    DialogDateTime = "07:33 29.06.2023",
-                    LastMessageText = "Тест2",
-                    MessengerDialogId = 2,
-                    MessengerImage = _MessengerIcon
-                },
-
-                new MessengerDialogForBackgroundPanel()
-                {
-                    ClientName = "Пациент№3",
-                    CountMessages = "25",
-                    ClientPhoto = _ClientPhoto,
-                    DialogDateTime = "07:55 29.06.2023",
-                    LastMessageText = "Тест3",
-                    MessengerDialogId = 3,
-                    MessengerImage = _MessengerIcon
-                }
-            };
-
-            Init(_MessengerDialogs, null);
         }
         //------------------------------------------------------------------  
         public void Init(IEnumerable<MessengerDialogForBackgroundPanel> _MessengerDialogs,
-            Tuple<Action> _Handlers)
+            Tuple<Action, Action, Action<int>> _Handlers)
         {
-            //m_btnClose_Click = _Handlers.Item1;
+            m_btnClose_Click = _Handlers.Item1;
+            m_btnExpandWindow_Click = _Handlers.Item2;
+            m_MessengerDialogGrid_MouseDown = _Handlers.Item3;
 
             m_Factory = new BackgroundPanelDialogsWPFFactory(Resources);
 
             foreach (var _MessengerDialog in _MessengerDialogs)
             {
                 Grid _MessengerDialogGrid = (Grid)m_Factory.Create(new RequestInfo(
-                    (uint)BackgroundPanelDialogsWPFElementTypes.MessengerDialogGrid, 
+                    (uint)BackgroundPanelDialogsWPFElementTypes.MessengerDialogGrid,
                     _MessengerDialog));
 
                 _MessengerDialogGrid.MouseDown += MessengerDialogGrid_MouseDown;
@@ -123,13 +64,18 @@ namespace MessengerDialogMessagesWPF
 
                 int _MessengerDialogId = Convert.ToInt32(_Sender.Name.Split('_')[1]);
 
-                MessageBox.Show($"Диалог №{_MessengerDialogId}");
+                m_MessengerDialogGrid_MouseDown.Invoke(_MessengerDialogId);
             }
         }
         //------------------------------------------------------------------
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             m_btnClose_Click.Invoke();
+        }
+        //------------------------------------------------------------------
+        private void btnExpandWindow_Click(object sender, RoutedEventArgs e)
+        {
+            m_btnExpandWindow_Click.Invoke();
         }
         //------------------------------------------------------------------
         #endregion

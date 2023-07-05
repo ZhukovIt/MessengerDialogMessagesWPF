@@ -38,21 +38,16 @@
                 <RowDefinition Height="42"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_collapse_window.png" Stretch="UniformToFill">
-                        <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
-                        </Image.Effect>
-                    </Image>
-                </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Margin="0, 0, 1, 0" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
+                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Margin="0, 0, 1, 0" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}" Click="btnExpandWindow_Click">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_expand_window.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
                         </Image.Effect>
                     </Image>
                 </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand" Style="{StaticResource btnNotMouseOver}">
+                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}" Click="btnClose_Click">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_close_window.png" Stretch="UniformToFill">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
@@ -67,12 +62,12 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Width="15" Height="15" HorizontalAlignment="Right" Cursor="Hand" BorderThickness="0" Background="#F0EDED"
-                        Style="{StaticResource btnNotMouseOver}" VerticalAlignment="Center"
-                        Grid.Column="0">
+                        Style="{StaticResource btnNotMouseOver}" VerticalAlignment="Center" x:Name="btnSetBackgroundPanelDialogWPF"
+                        Grid.Column="0" Click="btnSetBackgroundPanelDialogWPF_Click">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/back_to_dialogs.png"></Image>
                 </Button>
                 <Ellipse Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" 
-                         Grid.Column="1">
+                         Grid.Column="1" x:Name="ClientPhotoEllipse">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="../../Resources/businessman48.png">
                         </ImageBrush>
@@ -80,13 +75,9 @@
                 </Ellipse>
                 <StackPanel Orientation="Horizontal" Grid.Column="2">
                     <TextBlock FontFamily="Inter" FontSize="10" LineHeight="12.1" FontStyle="Normal" FontWeight="DemiBold"
-                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5, 0, 5, 0">
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5, 0, 5, 0" x:Name="ClientNameTextBox">
                     Patient_3
                     </TextBlock>
-                    <Button Width="15" Height="15" HorizontalAlignment="Left" Cursor="Hand" BorderThickness="0" Background="#F0EDED"
-                        Style="{StaticResource btnNotMouseOver}" VerticalAlignment="Center">
-                        <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/show_all_dialogs_as_list.png"></Image>
-                    </Button>
                 </StackPanel>
             </Grid>
             <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto">
@@ -108,7 +99,8 @@
                     </Border>
 
                     <StackPanel x:Name="spMessage_1">
-                        <TextBlock Style="{StaticResource tBlockMessagePreview}" Margin="8, 5, 0, 4">
+                        <TextBlock Style="{StaticResource tBlockMessagePreview}" Margin="8, 5, 0, 4"
+                                   HorizontalAlignment="Left">
                             Patient
                         </TextBlock>
                         <Border Style="{StaticResource borderClientMessage}">
@@ -119,15 +111,16 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Style="{StaticResource tBlockMessageSenderData}" VerticalAlignment="Bottom" Margin="0, 0, 5, 3"
                                                Foreground="#ABABAB">
-                                    (29.09.2022) 10:00
+                                    (29 сентября 2023 года) 10:00
                                     </TextBlock>
-                                    <Image Width="16" Height="16" Margin="0, 0, 15, 0" Source="../../Resources/message_delivered16.png">
+                                    <Image Width="16" Height="16" Margin="0, 0, 15, 0" Stretch="Fill" Source="../../Resources/message_delivered16.png">
                                         
                                     </Image>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="6, 2, 0, 2" Foreground="#A6A6A6">
+                        <TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="6, 2, 0, 2" Foreground="#A6A6A6"
+                                   HorizontalAlignment="Left">
                             Получено из Telegram
                         </TextBlock>
                     </StackPanel>
@@ -143,12 +136,12 @@
                                     Здравствуйте! Сейчас проверим свободные записи!
                                 </TextBlock>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Image Width="16" Height="16" Margin="15, 0, 0, 0" Source="../../Resources/message_delivered16.png">
+                                    <Image Width="16" Height="16" Margin="15, 0, 0, 0" Stretch="Fill" Source="../../Resources/message_delivered16.png">
 
                                     </Image>
                                     <TextBlock Style="{StaticResource tBlockMessageSenderData}" VerticalAlignment="Bottom" Margin="5, 0, 0, 3"
                                                Foreground="#ABABAB">
-                                    (29.09.2022) 10:02
+                                    (29 сентября 2023 года) 10:02
                                     </TextBlock>
                                 </StackPanel>
                             </StackPanel>
@@ -199,9 +192,21 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="8"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox Template="{StaticResource tBoxMessage}" x:Name="tBoxMessage" Margin="8, 0, 0, 0">
-                    
-                </TextBox>
+
+                <Border Height="34" Background="#F0EDED" CornerRadius="10" BorderThickness="1" BorderBrush="#ABABAB" Cursor="IBeam"
+                        Margin="8, 0, 0, 0">
+                    <TextBox Margin="8, 0, 4, 0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                             FontFamily="Inter" FontWeight="Normal" FontStyle="Normal" FontSize="10" Width="155" VerticalContentAlignment="Center"
+                             Background="#F0EDED" BorderThickness="0" Grid.Column="0" Height="30" TextAlignment="Left"
+                             HorizontalContentAlignment="Left" x:Name="tBoxMessageContent">
+                        
+                    </TextBox>
+                </Border>
+                <Button Grid.Row="0" Width="18" Height="16" Grid.Column="0" Background="#F0EDED" BorderThickness="0" 
+                        Margin="0, 0, 4, 0" Padding="0" Cursor="Hand" HorizontalAlignment="Right" Style="{StaticResource btnNotMouseOver}"
+                            Click="btnSendMessage_Click" Panel.ZIndex="1">
+                    <Image Source="../../Resources/SendMessage.png"/>
+                </Button>
             </Grid>
         </Grid>
     </Border>

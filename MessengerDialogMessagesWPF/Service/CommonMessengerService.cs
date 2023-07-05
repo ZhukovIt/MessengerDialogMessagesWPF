@@ -61,6 +61,21 @@ namespace MessengerDialogMessagesWPF.Service
             return false;
         }
         //--------------------------------------------------------------
+        public string GetFilePathFromMessageStatusTypeWPF(MessageStatusTypeWPF _MessageStatusType)
+        {
+            switch (_MessageStatusType)
+            {
+                case MessageStatusTypeWPF.InProcessSend:
+                    return "../../Resources/message_in_process_send16.png";
+                case MessageStatusTypeWPF.Delivered:
+                    return "../../Resources/message_delivered16.png";
+                case MessageStatusTypeWPF.NotDelivered:
+                    return "../../Resources/message_not_delivered16.png";
+                default:
+                    throw new NotImplementedException($"Данный код не поддерживает MessageStatusTypeWPF = {_MessageStatusType}");
+            }
+        }
+        //--------------------------------------------------------------
         public virtual void AddMessage(Panel Container, MessengerDialogMessage _Message, bool _HasAttachment)
         {
             throw new NotImplementedException("Метод AddMessage в классе CommonMessengerService не поддерживается!");

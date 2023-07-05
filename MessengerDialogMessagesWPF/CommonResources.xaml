@@ -19,27 +19,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <ControlTemplate TargetType="TextBox" x:Key="tBoxMessage">
-        <Border Height="34" Background="#F0EDED" CornerRadius="10" BorderThickness="1" BorderBrush="#ABABAB" Cursor="IBeam">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="22"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBox Text="{TemplateBinding Text}" Margin="8, 0, 4, 0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                             FontFamily="Inter" FontWeight="Normal" FontStyle="Normal" FontSize="10" Width="155" VerticalContentAlignment="Center"
-                             Background="#F0EDED" BorderThickness="0" Grid.Column="0" Height="30" TextAlignment="Left"
-                             HorizontalContentAlignment="Left">
-                </TextBox>
-                <Button Grid.Row="0" Width="18" Height="16" Grid.Column="1" Background="#F0EDED" BorderThickness="0" 
-                        Margin="0, 0, 4, 0" Padding="0" Cursor="Hand" HorizontalAlignment="Right" Style="{StaticResource btnNotMouseOver}">
-                    <Image Source="Resources/SendMessage.png"/>
-                </Button>
-            </Grid>
-        </Border>
-    </ControlTemplate>
-
+    
     <!--Ресурсы, стили и шаблоны для BackgroundPanelMessagesWPF-->
 
     <Style TargetType="Border" x:Key="borderDepartureDate">

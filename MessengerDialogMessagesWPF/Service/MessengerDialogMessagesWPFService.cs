@@ -92,7 +92,7 @@ namespace MessengerDialogMessagesWPF.Service
                     findSP.Children.Add(m_MainControl.Factory.Create(new RequestInfo(
                         (uint)MessengerDialogMessagesWPFElementTypes.MessageFieldStackPanelInBorder,
                         _MessageTypeWPF,
-                        Tuple.Create(_Message, 5, m_MainControl.Info.FactHeight))));
+                        Tuple.Create(_Message, 5))));
 
                     findSP.Children.Add(tempRemovedElement);
                 }

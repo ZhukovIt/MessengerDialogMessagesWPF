@@ -17,6 +17,8 @@ namespace MessengerDialogMessagesWPF
 
         public string DepartureTime { get; set; }
 
+        public string ShortDepartureDateTime { get; set; }
+
         public string UserName { get; set; }
 
         public string ClientName { get; set; }

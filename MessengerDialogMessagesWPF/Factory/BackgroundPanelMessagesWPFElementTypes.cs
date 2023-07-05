@@ -8,6 +8,17 @@ namespace MessengerDialogMessagesWPF.Factory
 {
     public enum BackgroundPanelMessagesWPFElementTypes : uint
     {
-        BorderDepartureDate = 1
+        BorderDepartureDate = 1,
+        DepartureDateTextBlock,
+        StatusMessageImage,
+        MessageSenderDataTextBlock,
+        MessageStatusFooterStackPanel,
+        TextMessageTextBlock,
+        SecondaryMessageStackPanel,
+        SecondaryMessageBorder,
+        SenderNameTextBlock,
+        SenderServiceInfoTextBlock,
+        MainMessageStackPanel,
+        CorrectDataClientPhotoEllipse
     }
 }

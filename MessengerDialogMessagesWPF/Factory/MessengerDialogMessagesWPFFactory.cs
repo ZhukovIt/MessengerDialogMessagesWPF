@@ -173,22 +173,7 @@ namespace MessengerDialogMessagesWPF.Factory
 
             _MessageStatusImage.Height = 16;
 
-            string _FilePath = null;
-
-            switch (_Message.StatusMessage)
-            {
-                case MessageStatusTypeWPF.InProcessSend:
-                    _FilePath = "../../Resources/message_in_process_send16.png";
-                    break;
-                case MessageStatusTypeWPF.Delivered:
-                    _FilePath = "../../Resources/message_delivered16.png";
-                    break;
-                case MessageStatusTypeWPF.NotDelivered:
-                    _FilePath = "../../Resources/message_not_delivered16.png";
-                    break;
-                default:
-                    throw new NotImplementedException($"Данный код не поддерживает MessageStatusTypeWPF = {_Message.StatusMessage}");
-            }
+            string _FilePath = m_MainControl.MessengerService.GetFilePathFromMessageStatusTypeWPF(_Message.StatusMessage);
 
             BitmapImage _ImageSource = new BitmapImage(new Uri(_FilePath, UriKind.Relative));
 

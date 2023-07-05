@@ -57,6 +57,7 @@
     <Compile Include="Factory\BackgroundPanelMessagesWPFFactory.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFElementTypes.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFFactory.cs" />
+    <Compile Include="Service\BackgroundPanelMessagesWPFService.cs" />
     <Compile Include="Service\CommonMessengerService.cs" />
     <Compile Include="Service\MessengerDialogMessagesWPFService.cs" />
     <Page Include="CommonResources.xaml">
