@@ -22,11 +22,12 @@ namespace MessengerDialogMessagesWPF
     {
         private CommonMessengerService m_MessengerService;
         private AbstractWPFCreator m_Factory;
-        private Action m_SetBackgroundPanelDialogsWPF;
+        private Action<int> m_SetBackgroundPanelDialogsWPF;
         private Action<int, string> m_SendMessage;
         private Action m_btnClose_Click;
         private Action m_ExpandWindow_Click;
         private MessengerDialogForBackgroundPanel m_MessengerDialog;
+        private Func<int, bool, CheckSecUser> m_CheckSecUser;
         //-----------------------------------------------------------------------------------
         public CommonMessengerService MessengerService
         {
@@ -60,10 +61,11 @@ namespace MessengerDialogMessagesWPF
         //-----------------------------------------------------------------------------------
         public void Init(MessengerDialogForBackgroundPanel _MessengerDialog, IEnumerable<MessengerDialogMessage> _Messages, 
             Tuple<
-                Action,
+                Action<int>,
                 Action<int, string>,
                 Action,
-                Action> _Handlers)
+                Action,
+                Func<int, bool, CheckSecUser>> _Handlers)
         {
             m_MessengerDialog = _MessengerDialog;
 
@@ -75,6 +77,11 @@ namespace MessengerDialogMessagesWPF
             m_SendMessage = _Handlers.Item2;
             m_btnClose_Click = _Handlers.Item3;
             m_ExpandWindow_Click = _Handlers.Item4;
+            m_CheckSecUser = _Handlers.Item5;
+
+            CheckSecUser _CheckSecUser = m_CheckSecUser.Invoke(MessengerDialogId, true);
+
+            SetCheckSecurityUser(_CheckSecUser.CheckSecurityUserType, _CheckSecUser.SecUserName);
 
             foreach (var _Message in _Messages)
             {
@@ -97,17 +104,53 @@ namespace MessengerDialogMessagesWPF
             m_MessengerService.UpdateMessage(spMessages, _Message);
         }
         //-----------------------------------------------------------------------------------
-        private void CorrectClientData()
+        public void SetClientPhoto(byte[] _ImageBytes)
         {
             m_Factory.Create(new RequestInfo((uint)BackgroundPanelMessagesWPFElementTypes.CorrectDataClientPhotoEllipse,
-                m_MessengerDialog.ClientPhoto, ClientPhotoEllipse));
+                _ImageBytes, ClientPhotoEllipse));
+        }
+        //-----------------------------------------------------------------------------------
+        private void CorrectClientData()
+        {
+            SetClientPhoto(m_MessengerDialog.ClientPhoto);
 
             ClientNameTextBox.Text = m_MessengerDialog.ClientName;
         }
         //-----------------------------------------------------------------------------------
+        private void SetCheckSecurityUser(CheckSecurityUserTypes _CheckSecUserType, string _SecUserName = "")
+        {
+            switch (_CheckSecUserType)
+            {
+                case CheckSecurityUserTypes.NoWorking:
+                    tBoxCheckSecUser.Text = "С диалогом  никто не работает";
+                    tBoxCheckSecUser.Foreground = new SolidColorBrush(Colors.Black);
+                    tBoxSecUserName.Text = "";
+                    tBoxSecUserName.Foreground = new SolidColorBrush(Colors.Black);
+                    tBoxMessageContent.IsEnabled = false;
+                    btnSendMessage.IsEnabled = false;
+                    break;
+                case CheckSecurityUserTypes.IWorking:
+                    tBoxCheckSecUser.Text = "Вы работаете с данным диалогом";
+                    tBoxCheckSecUser.Foreground = new SolidColorBrush(Colors.Green);
+                    tBoxSecUserName.Text = "";
+                    tBoxSecUserName.Foreground = new SolidColorBrush(Colors.Green);
+                    tBoxMessageContent.IsEnabled = true;
+                    btnSendMessage.IsEnabled = true;
+                    break;
+                case CheckSecurityUserTypes.OtherWorking:
+                    tBoxCheckSecUser.Text = "С диалогом работает пользователь:";
+                    tBoxCheckSecUser.Foreground = new SolidColorBrush(Color.FromRgb(0xE9, 0x7C, 0x7C));
+                    tBoxSecUserName.Text = _SecUserName;
+                    tBoxSecUserName.Foreground = new SolidColorBrush(Color.FromRgb(0xE9, 0x7C, 0x7C));
+                    tBoxMessageContent.IsEnabled = false;
+                    btnSendMessage.IsEnabled = false;
+                    break;
+            }
+        }
+        //-----------------------------------------------------------------------------------
         private void btnSetBackgroundPanelDialogWPF_Click(object sender, RoutedEventArgs e)
         {
-            m_SetBackgroundPanelDialogsWPF.Invoke();
+            m_SetBackgroundPanelDialogsWPF.Invoke(MessengerDialogId);
         }
         //-----------------------------------------------------------------------------------
         private void btnSendMessage_Click(object sender, RoutedEventArgs e)
@@ -129,5 +172,12 @@ namespace MessengerDialogMessagesWPF
             m_ExpandWindow_Click.Invoke();
         }
         //-----------------------------------------------------------------------------------
+        private void btnCheckSecurityUser_Click(object sender, RoutedEventArgs e)
+        {
+            CheckSecUser _CheckSecUser = m_CheckSecUser.Invoke(MessengerDialogId, false);
+
+            SetCheckSecurityUser(_CheckSecUser.CheckSecurityUserType, _CheckSecUser.SecUserName);
+        }
+        //------------------------------------------------------------------
     }
 }

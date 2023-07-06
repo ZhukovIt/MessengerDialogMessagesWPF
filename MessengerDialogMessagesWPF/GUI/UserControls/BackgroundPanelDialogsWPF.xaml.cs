@@ -25,7 +25,6 @@ namespace MessengerDialogMessagesWPF
         private Action m_btnClose_Click;
         private Action m_btnExpandWindow_Click;
         private Action<int> m_MessengerDialogGrid_MouseDown;
-        private Point m_LastLocation;
         //------------------------------------------------------------------
         public BackgroundPanelDialogsWPF()
         {

@@ -35,6 +35,8 @@ namespace MessengerDialogMessagesWPF
 
         public MessageStatusTypeWPF StatusMessage { get; set; }
 
+        public int MessageStatusTypeId { get; set; }
+
         public IEnumerable<MessengerDialogMessageAttachment> Attachments { get; set; }
 
         public bool NeedProxyAttachment { get; set; }

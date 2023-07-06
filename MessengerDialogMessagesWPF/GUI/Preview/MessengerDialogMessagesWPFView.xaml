@@ -13,140 +13,16 @@
                 <ResourceDictionary Source="../../CommonResources.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </UserControl.Resources>
-
+    </UserControl.Resources>    
+    
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Padding="0, 0, 0, 10">
+        <ScrollViewer Grid.Row="0" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Padding="0, 0, 0, 10">
             <StackPanel x:Name="spMessages" Orientation="Vertical">
-                <TextBox x:Name="Mytb" Template="{StaticResource tBoxDateTemplate}">04 апреля 2023 года</TextBox>
-
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse Width="48" Height="48" VerticalAlignment="Top" Margin="5, 0, 0, 0">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="C:\Users\SM11\Desktop\Справки образец\003_Вторая страница2.jpg"></ImageBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <StackPanel Orientation="Vertical" MaxWidth="600">
-                        <TextBox HorizontalAlignment="Left" Template="{StaticResource tBoxUserClientNameTemplate}" Margin="5, 5, 0, 0">Виктор Жуков</TextBox>
-
-                        <Border CornerRadius="12" HorizontalAlignment="Left" BorderThickness="1" Background="#e2f4db" Padding="0, 0, 0, 5" Margin="0, 0, 0, 5">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox BorderThickness="0" Padding="10" Margin="0, 0, 12, 0" Height="auto" HorizontalAlignment="Left" TextAlignment="Right" Background="Transparent" TextWrapping="Wrap" FontSize="14" FontFamily="Times New Roman" IsReadOnly="True">
-                                    Привет!
-                                </TextBox>
-                                <TextBox Margin="5, -2, 5, 0" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                    (04 апреля 2023 года)  10:26
-                                </TextBox>
-                            </StackPanel>
-                        </Border>
-
-                        <Border CornerRadius="12" HorizontalAlignment="Right" BorderThickness="1" Background="#e2f4db" Padding="0, 0, 0, 5" Margin="0, 0, 0, 5">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox BorderThickness="0" Padding="10" Margin="0, 0, 12, 0" Width="auto" Height="auto" HorizontalAlignment="Right" TextAlignment="Left" Background="Transparent" TextWrapping="Wrap" FontSize="14" FontFamily="Times New Roman" IsReadOnly="True">
-                                    Привет! Дата и время: 2023_04_07_14_19_30_425sfkskfijsifsjmnfksadoiksakdoksadsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd
-                                </TextBox>
-                                <TextBox Margin="5, -2, 5, 0" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                    (04 апреля 2023 года)  10:26
-                                </TextBox>
-                            </StackPanel>
-                        </Border>
-
-                        <Border CornerRadius="12" HorizontalAlignment="Left" BorderThickness="1" Background="#e2f4db" Padding="0, 0, 0, 5" Margin="0, 0, 0, 5">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox BorderThickness="0" Padding="10" Margin="0, 0, 12, 0" Width="auto" Height="auto" HorizontalAlignment="Left" TextAlignment="Right" Background="Transparent" TextWrapping="Wrap" FontSize="14" FontFamily="Times New Roman" IsReadOnly="True">
-                                    Привет! Дата и время: 2023_04_07_14_19_30_425sfkskfijsifsjmnfksadoiksakdoksad
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 15" Cursor="Hand" HorizontalAlignment="Left">
-                                    <Image Source="C:\Users\SM11\Desktop\FirstProject\Source\Clinic\Resource\docFile128.png" Width="auto" Height="32" Margin="0, 0, 10, 0"></Image>
-                                    <TextBlock VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman">
-                                    <Hyperlink>Ваш документ</Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-                                <TextBox Margin="5, -2, 5, 0" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                    (04 апреля 2023 года)  10:26
-                                </TextBox>
-                            </StackPanel>
-                        </Border>
-
-                        <Border CornerRadius="12" HorizontalAlignment="Left" BorderThickness="1" Background="#e2f4db" Padding="0, 0, 0, 5" Margin="0, 0, 0, 5">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox BorderThickness="0" Padding="10" Margin="0, 0, 12, 0" Width="auto" Height="auto" HorizontalAlignment="Left" TextAlignment="Right" Background="Transparent" TextWrapping="Wrap" FontSize="14" FontFamily="Times New Roman" IsReadOnly="True">
-                                    Привет! Дата и время: 2023_04_07_14_19_30_425sfkskfijsifsjmnfksadoiksakdoksad
-                                </TextBox>
-                                <TextBox Margin="5, -2, 5, 0" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                    (04 апреля 2023 года)  10:26
-                                </TextBox>
-                            </StackPanel>
-                        </Border>
-
-                        <TextBox Template="{StaticResource tBoxMessageSourceTemplate}" Margin="5, 0, 0, 0">
-                            Получено из ВКонтакте
-                        </TextBox>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <TextBox HorizontalAlignment="Right" Template="{StaticResource tBoxUserClientNameTemplate}" Margin="0, 5, 5, 0">Администратор</TextBox>
-                        <Border MaxWidth="680" CornerRadius="12" BorderThickness="1" Background="#daeff4" Padding="0, 0, 0, 5">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox BorderThickness="0" TextAlignment="Left" Padding="10" Width="auto" Height="auto" HorizontalAlignment="Right" Background="#daeff4" TextWrapping="Wrap" FontSize="14" FontFamily="Times New Roman">
-                                    Привет!
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 10" Cursor="Hand">
-                                    <Image Source="C:\Users\SM11\Desktop\FirstProject\Source\Clinic\Resource\docFile128.png" Width="auto" Height="32" HorizontalAlignment="Left" Margin="10, 0, 0, 0"></Image>
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontFamily="Times New Roman">None.png</TextBlock>
-                                </StackPanel>
-                                <TextBox Margin="5, -2, 0, 0" HorizontalAlignment="Left" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                    11:12  (04 апреля 2023 года)
-                                </TextBox>
-                            </StackPanel>
-                        </Border>
-                        <TextBox HorizontalAlignment="Right" Template="{StaticResource tBoxMessageSourceTemplate}" Margin="0, 3, 5, 0">
-                            Получено из ВКонтакте - TestUmnico48
-                        </TextBox>
-                    </StackPanel>
-                    <Image VerticalAlignment="Top" Width="48" Height="48" Source="C:\Users\SM11\Desktop\FirstProject\Source\Clinic\Resource\doctor48.png"></Image>
-                </StackPanel>
-
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="103"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="24"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Line Grid.Row="0" Grid.Column="0" X1="5" Y1="12" X2="370" Y2="12" Stroke="#dce1e6" StrokeThickness="1"></Line>
-                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" FontSize="12" FontFamily="Times New Roman" Foreground="#626d7a">Новые сообщения</TextBlock>
-                    <Line Grid.Row="0" Grid.Column="2" X1="5" Y1="12" X2="365" Y2="12" Stroke="#dce1e6" StrokeThickness="1"></Line>
-                </Grid>
-
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0, 0, 0, 20">
-                    <StackPanel Orientation="Vertical">
-                        <TextBox HorizontalAlignment="Right" Template="{StaticResource tBoxUserClientNameTemplate}" Margin="0, 5, 5, 0">Администратор</TextBox>
-                        <StackPanel Orientation="Vertical">
-                            <TextBox Padding="10, 10, 10, 0" Width="auto" Height="50" HorizontalAlignment="Right" Background="#daeff4" TextWrapping="Wrap">
-                                Привет! Дата и время: 2023_04_07_14_19_30_425
-                            </TextBox>
-
-                            <TextBox Margin="5, -4, 0, 0" HorizontalAlignment="Left" Template="{StaticResource tBoxDepartureTimeTemplate}">
-                                11:12  (04 апреля 2023 года)
-                            </TextBox>
-                        </StackPanel>
-                        <TextBox HorizontalAlignment="Right" Template="{StaticResource tBoxMessageSourceTemplate}" Margin="0, 3, 5, 0">
-                            Получено из ВКонтакте - TestUmnico48
-                        </TextBox>
-                    </StackPanel>
-                    <Image VerticalAlignment="Top" Width="48" Height="48" x:Name="imgUserPhoto2" Source="C:\Users\SM11\Desktop\FirstProject\Source\Clinic\Resource\doctor48.png"></Image>
-                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
