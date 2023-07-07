@@ -201,13 +201,13 @@
                     <TextBox Margin="8, 0, 4, 0" HorizontalAlignment="Left" VerticalAlignment="Center"
                              FontFamily="Inter" FontWeight="Normal" FontStyle="Normal" FontSize="10" Width="155" VerticalContentAlignment="Center"
                              Background="#F0EDED" BorderThickness="0" Grid.Column="0" Height="30" TextAlignment="Left"
-                             HorizontalContentAlignment="Left" x:Name="tBoxMessageContent">
+                             HorizontalContentAlignment="Left" x:Name="tBoxMessageContent" KeyDown="tBoxMessageContent_KeyDown">
                         
                     </TextBox>
                 </Border>
                 <Button Grid.Row="0" Width="18" Height="16" Grid.Column="0" Background="#F0EDED" BorderThickness="0" 
                         Margin="0, 0, 4, 0" Padding="0" Cursor="Hand" HorizontalAlignment="Right" Style="{StaticResource btnNotMouseOver}"
-                        Panel.ZIndex="1" x:Name="btnSendMessage">
+                        Panel.ZIndex="1" x:Name="btnSendMessage" Click="btnSendMessage_Click">
                     <Image Source="../../Resources/SendMessage.png"/>
                 </Button>
             </Grid>

@@ -21,5 +21,7 @@ namespace MessengerDialogMessagesWPF
         public string CountMessages { get; set; }
 
         public string LastMessageText { get; set; }
+
+        public int MaxLengthForMessage { get; set; }
     }
 }

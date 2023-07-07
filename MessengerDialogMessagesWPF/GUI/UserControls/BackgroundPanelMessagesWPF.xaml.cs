@@ -69,6 +69,8 @@ namespace MessengerDialogMessagesWPF
         {
             m_MessengerDialog = _MessengerDialog;
 
+            tBoxMessageContent.MaxLength = m_MessengerDialog.MaxLengthForMessage;
+
             m_Factory = new BackgroundPanelMessagesWPFFactory(this, Resources);
 
             CorrectClientData();
@@ -177,6 +179,14 @@ namespace MessengerDialogMessagesWPF
             CheckSecUser _CheckSecUser = m_CheckSecUser.Invoke(MessengerDialogId, false);
 
             SetCheckSecurityUser(_CheckSecUser.CheckSecurityUserType, _CheckSecUser.SecUserName);
+        }
+        //------------------------------------------------------------------
+        private void tBoxMessageContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnSendMessage_Click(btnSendMessage, null);
+            }
         }
         //------------------------------------------------------------------
     }

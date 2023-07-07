@@ -116,6 +116,8 @@ namespace MessengerDialogMessagesWPF.Factory
         {
             TextBlock _ResultControl = new TextBlock();
 
+            _ResultControl.TextWrapping = TextWrapping.Wrap;
+
             _ResultControl.FontFamily = new FontFamily("Inter");
 
             _ResultControl.FontSize = 13;
@@ -268,7 +270,7 @@ namespace MessengerDialogMessagesWPF.Factory
             firstRow.Height = new GridLength(4);
 
             RowDefinition secondRow = new RowDefinition();
-            secondRow.Height = new GridLength(16);
+            secondRow.Height = new GridLength(100, GridUnitType.Star);
 
             RowDefinition thirdRow = new RowDefinition();
             thirdRow.Height = new GridLength(12);

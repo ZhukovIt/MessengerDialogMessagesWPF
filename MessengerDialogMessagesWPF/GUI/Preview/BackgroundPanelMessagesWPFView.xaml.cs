@@ -24,5 +24,19 @@ namespace MessengerDialogMessagesWPF
         {
             InitializeComponent();
         }
+        //------------------------------------------------------------------------
+        private void btnSendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show($"Сообщение отправлено!\r\nТекст сообщения: {tBoxMessageContent.Text}");
+        }
+        //------------------------------------------------------------------------
+        private void tBoxMessageContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnSendMessage_Click(btnSendMessage, null);
+            }
+        }
+        //------------------------------------------------------------------------
     }
 }

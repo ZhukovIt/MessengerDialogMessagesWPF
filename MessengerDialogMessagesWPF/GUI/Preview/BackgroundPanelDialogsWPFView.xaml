@@ -74,7 +74,7 @@
                         </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="4"></RowDefinition>
-                            <RowDefinition Height="16"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="12"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
@@ -90,9 +90,9 @@
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <TextBlock Grid.Row="1" Grid.Column="1"
+                        <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"
                     FontFamily="Inter" FontSize="13" LineHeight="16" FontStyle="Normal" FontWeight="DemiBold" Margin="0, 0, 0, 1">
-                            Patient_3
+                            Комаричева Алёна Геннадьевна
                         </TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="1"
                     FontFamily="Inter" FontSize="10" LineHeight="12" FontStyle="Normal" FontWeight="DemiBold" Foreground="#696565">
