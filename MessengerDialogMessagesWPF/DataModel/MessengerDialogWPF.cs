@@ -12,6 +12,8 @@ namespace MessengerDialogMessagesWPF
         private Action<MessengerDialogWPF> m_ActionDelegateIsReadChanged;
         private event Action<MessengerDialogWPF> m_ChangedIsRead;
         //--------------------------------------------------------------
+        public int Id { get; set; }
+        //--------------------------------------------------------------
         public List<MessengerDialogMessage> Messages { get; set; }
         //--------------------------------------------------------------
         public bool IsRead

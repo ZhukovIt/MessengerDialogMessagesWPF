@@ -529,6 +529,8 @@ namespace MessengerDialogMessagesWPF.Factory
 
             _ResultControl.Cursor = Cursors.Hand;
 
+            m_MainControl.UIElementsForEnabled.Add(_ResultControl);
+
             return _ResultControl;
         }
         //--------------------------------------------------------------

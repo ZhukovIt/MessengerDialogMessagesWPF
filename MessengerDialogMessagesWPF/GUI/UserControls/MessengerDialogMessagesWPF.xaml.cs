@@ -25,6 +25,7 @@ namespace MessengerDialogMessagesWPF
         private CommonMessengerService m_MessengerService;
         private AbstractWPFCreator m_Factory;
         private MessengerDialogMessagesWPFInfo m_Info;
+        private IEnumerable<UIElement> m_UIElementsForEnabled;
         //--------------------------------------------------------------
         public MessengerDialogMessagesWPFInfo Info
         {
@@ -50,15 +51,37 @@ namespace MessengerDialogMessagesWPF
             }
         }
         //--------------------------------------------------------------
+        public int MessengerDialogId
+        {
+            get
+            {
+                if (m_Info.MessengerDialog == null)
+                {
+                    return -1;
+                }
+
+                return m_Info.MessengerDialog.Id;
+            }
+        }
+        //--------------------------------------------------------------
+        public List<UIElement> UIElementsForEnabled => (List<UIElement>)m_UIElementsForEnabled;
+        //--------------------------------------------------------------
         public MessengerDialogMessagesWPF()
         {
             InitializeComponent();
             m_MessengerService = new MessengerDialogMessagesWPFService(this);
+            m_UIElementsForEnabled = new List<UIElement>();
         }
         //--------------------------------------------------------------
         public void Init(MessengerDialogWPF _MessengerDialog, Action<byte[]> _ShowImage, Func<string, byte[]> _GetBytesForFileType, 
-            Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight)
+            Action<bool> _SetStateMessageToReaded, double _FactWidth, double _FactHeight, bool _IsCanDataModify)
         {
+            spMessages.Children.Clear();
+
+            FrameworkElement _URLHyperLinkStackPanel = m_MessengerService.FindFrameworkElementFromKey(MainGrid, "URLHyperLinkStackPanel");
+
+            MainGrid.Children.Remove(_URLHyperLinkStackPanel);
+
             m_Factory = new MessengerDialogMessagesWPFFactory(this, Resources);
 
             m_Info = new MessengerDialogMessagesWPFInfo(_GetBytesForFileType, _ShowImage, _MessengerDialog, _SetStateMessageToReaded,
@@ -76,6 +99,14 @@ namespace MessengerDialogMessagesWPF
             ((MessengerDialogMessagesWPFService)m_MessengerService).GroupMessagesFromIsNewState(_MessengerDialog.Messages, spMessages);
 
             ScrollToEndForMainScrollViewer();
+
+            foreach (UIElement _Element in m_UIElementsForEnabled)
+            {
+                if (_Element != null)
+                {
+                    _Element.IsEnabled = _IsCanDataModify;
+                }
+            }
         }
         //--------------------------------------------------------------
         public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
@@ -124,7 +155,7 @@ namespace MessengerDialogMessagesWPF
         //--------------------------------------------------------------
         private void btnCheckMessages_Click(object sender, RoutedEventArgs e)
         {
-            m_Info.SetStateMessageToReaded.Invoke(true);
+            m_Info.SetStateMessageToReaded.Invoke(false);
 
             MainGrid.Children.Remove((UIElement)sender);
 
