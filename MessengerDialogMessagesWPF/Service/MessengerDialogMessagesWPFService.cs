@@ -164,6 +164,11 @@ namespace MessengerDialogMessagesWPF.Service
             }
         }
         //--------------------------------------------------------------
+        public bool MessengerDialogMessageIsExists(Panel _Container, int _MessengerDialogMessageId)
+        {
+            return FindFrameworkElementFromKey(_Container, $"DepartureTimeAndStatusSP{_MessengerDialogMessageId}") != null;
+        }
+        //--------------------------------------------------------------
         public void GroupMessagesFromIsNewState(IEnumerable<MessengerDialogMessage> _Messages, Panel _Container)
         {
             IEnumerable<IGrouping<bool, MessengerDialogMessage>> groupedMessages = _Messages.GroupBy(m => m.IsNewMessage);

@@ -18,6 +18,8 @@ namespace MessengerDialogMessagesWPF
 
         public byte[] MessengerImage { get; set; }
 
+        public string MessengerName { get; set; }
+
         public string CountMessages { get; set; }
 
         public string LastMessageText { get; set; }

@@ -30,57 +30,75 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="17"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="3"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="1"/>
                 <RowDefinition/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="42"/>
             </Grid.RowDefinitions>
-            <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Margin="0, 0, 1, 0" Cursor="Hand" 
-                        Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_expand_window.png" Stretch="UniformToFill">
-                        <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
-                        </Image.Effect>
-                    </Image>
-                </Button>
-                <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand" 
-                        Style="{StaticResource btnNotMouseOver}">
-                    <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_close_window.png" Stretch="UniformToFill">
-                        <Image.Effect>
-                            <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
-                        </Image.Effect>
-                    </Image>
-                </Button>
-            </StackPanel>
-            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18"></ColumnDefinition>
                     <ColumnDefinition Width="31"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Width="15" Height="15" HorizontalAlignment="Right" Cursor="Hand" BorderThickness="0" Background="#F0EDED"
                         Style="{StaticResource btnNotMouseOver}" VerticalAlignment="Center" x:Name="btnSetBackgroundPanelDialogWPF"
                         Grid.Column="0">
                     <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/back_to_dialogs.png"></Image>
                 </Button>
-                <Ellipse Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                <Ellipse Width="28" Height="28" VerticalAlignment="Center" HorizontalAlignment="Right" 
                          Grid.Column="1" x:Name="ClientPhotoEllipse">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="../../Resources/businessman48.png">
                         </ImageBrush>
                     </Ellipse.Fill>
                 </Ellipse>
-                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <Grid Grid.Column="2" Margin="5, 0, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="21" />
+                    </Grid.RowDefinitions>
                     <TextBlock FontFamily="Inter" FontSize="10" LineHeight="12.1" FontStyle="Normal" FontWeight="DemiBold"
-                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5, 0, 5, 0" x:Name="ClientNameTextBox">
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left" x:Name="ClientNameTextBox" Margin="0, 5, 0, 0"
+                                   Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" TextWrapping="Wrap" Width="auto">
                     Patient_3
                     </TextBlock>
-                </StackPanel>
+                    <Image Width="16" Height="16" Grid.Row="1" Grid.Column="0" Source="../../Resources/vk.png" Margin="0, 2.5, 2.5, 0"
+                               VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="imgMessengerIcon">
+
+                    </Image>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource tBlockMessageSenderData}"
+                                   Margin="0, 5, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="tBlockMessengerName">
+                            ВКонтакте
+                    </TextBlock>
+                    <StackPanel x:Name="TaskBarButtons" Orientation="Horizontal" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right">
+                        <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Margin="0, 0, 1, 0" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}">
+                            <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_expand_window.png" Stretch="UniformToFill">
+                                <Image.Effect>
+                                    <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3"></DropShadowEffect>
+                                </Image.Effect>
+                            </Image>
+                        </Button>
+                        <Button Width="17" Height="17" BorderThickness="0" Background="#F0EDED" Cursor="Hand" 
+                        Style="{StaticResource btnNotMouseOver}">
+                            <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Source="../../Resources/white_close_window.png" Stretch="UniformToFill">
+                                <Image.Effect>
+                                    <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
+                                </Image.Effect>
+                            </Image>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
-            <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="spMessages">
                     <StackPanel.Background>
                         <SolidColorBrush Color="White"></SolidColorBrush>
@@ -119,10 +137,10 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="6, 2, 0, 2" Foreground="#A6A6A6"
+                        <!--TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="6, 2, 0, 2" Foreground="#A6A6A6"
                                    HorizontalAlignment="Left">
                             Получено из Telegram
-                        </TextBlock>
+                        </TextBlock-->
                     </StackPanel>
 
                     <StackPanel x:Name="spMessage_2">
@@ -146,15 +164,15 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="0, 2, 6, 2" Foreground="#A6A6A6"
+                        <!--TextBlock Style="{StaticResource tBlockMessageSenderData}" Margin="0, 2, 6, 2" Foreground="#A6A6A6"
                                    HorizontalAlignment="Right">
                             Отправлено из Telegram - Simplex
-                        </TextBlock>
+                        </TextBlock-->
                     </StackPanel>
 
                 </StackPanel>
             </ScrollViewer>
-            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
                 <Grid.Background>
                     <SolidColorBrush Color="White"></SolidColorBrush>
                 </Grid.Background>
@@ -166,21 +184,19 @@
                     <RowDefinition Height="18"></RowDefinition>
                     <RowDefinition Height="17"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#E97C7C" Margin="12, 8, 0, 0"
-                       FontFamily="Inter" FontSize="8" FontStyle="Normal" FontWeight="Normal" 
-                       LineHeight="8.47" x:Name="tBoxCheckSecUser">
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource tBlockSecUserInfo}" Margin="12, 8, 0, 0"
+                       x:Name="tBoxCheckSecUser">
                 С диалогом работает пользователь:
                 </TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#E97C7C" Margin="12, 0, 0, 0"
-                       FontFamily="Inter" FontSize="8" FontStyle="Normal" FontWeight="Normal" 
-                       LineHeight="8.47" x:Name="tBoxSecUserName">
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource tBlockSecUserInfo}" Margin="12, 0, 0, 0"
+                       x:Name="tBoxSecUserName">
                 Агнесса Карпова
                 </TextBlock>
                 <Button Style="{StaticResource btnNotMouseOver}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="22" Height="22" 
                         Cursor="Hand" VerticalAlignment="Top" Margin="0, 9, 11, 0" BorderThickness="0" Background="White" Padding="0"
                         x:Name="btnCheckSecurityUser">
                     <Image Source="../../Resources/swap_user.png" Width="20" Height="20"
-                           VerticalAlignment="Center" HorizontalAlignment="Center">
+                           VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="imgCheckSecurityUser">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4"></DropShadowEffect>
                         </Image.Effect>
@@ -202,7 +218,7 @@
                              FontFamily="Inter" FontWeight="Normal" FontStyle="Normal" FontSize="10" Width="155" VerticalContentAlignment="Center"
                              Background="#F0EDED" BorderThickness="0" Grid.Column="0" Height="30" TextAlignment="Left"
                              HorizontalContentAlignment="Left" x:Name="tBoxMessageContent" KeyDown="tBoxMessageContent_KeyDown">
-                        
+                        Можем записать Вас!
                     </TextBox>
                 </Border>
                 <Button Grid.Row="0" Width="18" Height="16" Grid.Column="0" Background="#F0EDED" BorderThickness="0" 

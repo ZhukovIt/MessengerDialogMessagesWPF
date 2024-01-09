@@ -19,7 +19,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <!--Ресурсы, стили и шаблоны для BackgroundPanelMessagesWPF-->
 
     <Style TargetType="Border" x:Key="borderDepartureDate">
@@ -74,10 +74,19 @@
 
     <Style TargetType="TextBlock" x:Key="tBlockMessageSenderData">
         <Setter Property="FontFamily" Value="Inter"></Setter>
-        <Setter Property="FontSize" Value="8"></Setter>
-        <Setter Property="LineHeight" Value="9.68"></Setter>
+        <Setter Property="FontSize" Value="9"></Setter>
+        <Setter Property="LineHeight" Value="10.89"></Setter>
         <Setter Property="FontStyle" Value="Normal"></Setter>
         <Setter Property="FontWeight" Value="Normal"></Setter>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="tBlockSecUserInfo">
+        <Setter Property="Foreground" Value="#E97C7C"></Setter>
+        <Setter Property="FontFamily" Value="Inter"></Setter>
+        <Setter Property="FontSize" Value="9"></Setter>
+        <Setter Property="FontStyle" Value="Normal"></Setter>
+        <Setter Property="FontWeight" Value="Normal"></Setter>
+        <Setter Property="LineHeight" Value="10.89"></Setter>
     </Style>
 
     <!--Ресурсы, стили и шаблоны для MessengerDialogMessagesWPF-->

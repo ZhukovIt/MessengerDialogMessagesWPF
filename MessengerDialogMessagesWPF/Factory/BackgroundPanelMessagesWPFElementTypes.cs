@@ -19,6 +19,7 @@ namespace MessengerDialogMessagesWPF.Factory
         SenderNameTextBlock,
         SenderServiceInfoTextBlock,
         MainMessageStackPanel,
-        CorrectDataClientPhotoEllipse
+        CorrectDataClientPhotoEllipse,
+        CorrectDataMessengerIcon
     }
 }

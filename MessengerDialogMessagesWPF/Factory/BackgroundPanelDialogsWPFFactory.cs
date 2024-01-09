@@ -43,6 +43,8 @@ namespace MessengerDialogMessagesWPF.Factory
                     return CreateLastMessageTextInDialogTextBlock((string)_RequestInfo.lParam);
                 case BackgroundPanelDialogsWPFElementTypes.MessengerDialogGrid:
                     return CreateMessengerDialogGrid((MessengerDialogForBackgroundPanel)_RequestInfo.lParam);
+                case BackgroundPanelDialogsWPFElementTypes.GridEmptyMessengerDialogsProxy:
+                    return CreateGridEmptyMessengerDialogsProxy();
                 default:
                     throw new NotImplementedException(
                         $"Элемент типа: {(BackgroundPanelDialogsWPFElementTypes)_RequestInfo.ElementType} не поддерживается данной фабрикой!");
@@ -50,6 +52,31 @@ namespace MessengerDialogMessagesWPF.Factory
         }
         //--------------------------------------------------------------
         #region Вспомогательные методы для создания элементов фабрики
+        //--------------------------------------------------------------
+        private Grid CreateGridEmptyMessengerDialogsProxy()
+        {
+            Grid _Result = new Grid();
+
+            _Result.Margin = new Thickness(0, 10, 0, 0);
+
+            _Result.Background = new SolidColorBrush(Colors.White);
+
+            _Result.Name = "grdEmptyMessengerDialogsProxy";
+
+            _Result.Height = 280;
+
+            TextBlock _TextBlockEmptyMessengerDialogsProxy = new TextBlock();
+
+            _TextBlockEmptyMessengerDialogsProxy.VerticalAlignment = VerticalAlignment.Center;
+
+            _TextBlockEmptyMessengerDialogsProxy.HorizontalAlignment = HorizontalAlignment.Center;
+
+            _TextBlockEmptyMessengerDialogsProxy.Text = "Нет непрочитанных диалогов!";
+
+            _Result.Children.Add(_TextBlockEmptyMessengerDialogsProxy);
+
+            return _Result;
+        }
         //--------------------------------------------------------------
         private Effect CreateDropShadowEffect()
         {

@@ -49,6 +49,8 @@ namespace MessengerDialogMessagesWPF.Factory
                     return CreateMainMessageStackPanel((MessengerDialogMessage)_RequestInfo.lParam);
                 case BackgroundPanelMessagesWPFElementTypes.CorrectDataClientPhotoEllipse:
                     return CorrectDataClientPhotoEllipse((byte[])_RequestInfo.lParam, (Ellipse)_RequestInfo.wParam);
+                case BackgroundPanelMessagesWPFElementTypes.CorrectDataMessengerIcon:
+                    return CorrectDataMessengerIcon((byte[])_RequestInfo.lParam, (Image)_RequestInfo.wParam);
                 default:
                     throw new NotImplementedException(
                         $"Элемент типа: {(BackgroundPanelDialogsWPFElementTypes)_RequestInfo.ElementType} не поддерживается данной фабрикой!");
@@ -272,7 +274,7 @@ namespace MessengerDialogMessagesWPF.Factory
 
             _ResultControl.Children.Add(CreateSecondaryMessageBorder(_Message));
 
-            _ResultControl.Children.Add(CreateSenderServiceInfoTextBlock(_Message));
+            //_ResultControl.Children.Add(CreateSenderServiceInfoTextBlock(_Message));
 
             return _ResultControl;
         }
@@ -296,6 +298,23 @@ namespace MessengerDialogMessagesWPF.Factory
             _Control.Fill = _ImageBrush;
 
             return _Control;
+        }
+        //-----------------------------------------------------------------------------------
+        private Image CorrectDataMessengerIcon(byte[] _ImageBytes, Image _Image)
+        {
+            MemoryStream stream = new MemoryStream(_ImageBytes);
+
+            BitmapImage imageSource = new BitmapImage();
+
+            imageSource.BeginInit();
+
+            imageSource.StreamSource = stream;
+
+            imageSource.EndInit();
+
+            _Image.Source = imageSource;
+
+            return _Image;
         }
         //-----------------------------------------------------------------------------------
     }

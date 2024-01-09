@@ -13,6 +13,8 @@ namespace MessengerDialogMessagesWPF
 
         public string TextMessage { get; set; }
 
+        public DateTime DepartureDateTime { get; set; }
+
         public string DepartureDate { get; set; }
 
         public string DepartureTime { get; set; }

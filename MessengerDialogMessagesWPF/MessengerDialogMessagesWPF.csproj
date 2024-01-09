@@ -59,6 +59,9 @@
     <Compile Include="Factory\BackgroundPanelMessagesWPFFactory.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFElementTypes.cs" />
     <Compile Include="Factory\MessengerDialogMessagesWPFFactory.cs" />
+    <Compile Include="GUI\Preview\BackgroundPanelDialogsWPFEmptyView.xaml.cs">
+      <DependentUpon>BackgroundPanelDialogsWPFEmptyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml.cs">
       <DependentUpon>BackgroundPanelDialogsWPFView.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,10 @@
     <Page Include="CommonResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Preview\BackgroundPanelDialogsWPFEmptyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Preview\BackgroundPanelDialogsWPFView.xaml">
       <Generator>MSBuild:Compile</Generator>

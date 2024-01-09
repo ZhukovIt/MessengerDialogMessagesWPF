@@ -109,6 +109,18 @@ namespace MessengerDialogMessagesWPF
             }
         }
         //--------------------------------------------------------------
+        public void EnableButtonCheckMessages(bool _IsEnabled)
+        {
+            Button _ButtonCheckMessages = (Button)m_MessengerService.FindFrameworkElementFromKey(MainGrid, "btnCheckMessages");
+
+            if (_ButtonCheckMessages == null)
+            {
+                return;
+            }
+
+            _ButtonCheckMessages.IsEnabled = _IsEnabled;
+        }
+        //--------------------------------------------------------------
         public void AddMessage(MessengerDialogMessage _Message, bool _HasAttachment)
         {
             m_MessengerService.AddMessage(spMessages, _Message, _HasAttachment);
@@ -117,6 +129,12 @@ namespace MessengerDialogMessagesWPF
         public void UpdateMessage(MessengerDialogMessage _MessengerDialogMessage)
         {
             m_MessengerService.UpdateMessage(spMessages, _MessengerDialogMessage);
+        }
+        //--------------------------------------------------------------
+        public bool MessengerDialogMessageIsExists(int _MessengerDialogMessageId)
+        {
+            return ((MessengerDialogMessagesWPFService)m_MessengerService)
+                .MessengerDialogMessageIsExists(spMessages, _MessengerDialogMessageId);
         }
         //--------------------------------------------------------------
         public void Clear()

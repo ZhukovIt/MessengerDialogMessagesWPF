@@ -16,6 +16,7 @@ namespace MessengerDialogMessagesWPF.Factory
         CountMessagesInDialogTextBlock,
         CountMessagesInDialogBorder,
         LastMessageTextInDialogTextBlock,
-        MessengerDialogGrid
+        MessengerDialogGrid,
+        GridEmptyMessengerDialogsProxy
     }
 }

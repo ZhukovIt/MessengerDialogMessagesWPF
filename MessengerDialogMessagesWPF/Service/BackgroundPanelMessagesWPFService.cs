@@ -10,7 +10,7 @@ namespace MessengerDialogMessagesWPF.Service
 {
     public sealed class BackgroundPanelMessagesWPFService : CommonMessengerService
     {
-        private BackgroundPanelMessagesWPF m_MainControl;
+        private readonly BackgroundPanelMessagesWPF m_MainControl;
         //--------------------------------------------------------------
         public BackgroundPanelMessagesWPFService(BackgroundPanelMessagesWPF _MainControl)
         {
@@ -25,11 +25,11 @@ namespace MessengerDialogMessagesWPF.Service
             Container.Children.Add(_NewMessage);
         }
         //--------------------------------------------------------------
-        public override void UpdateMessage(Panel Container, MessengerDialogMessage _Message)
+        public override void UpdateMessage(Panel _Container, MessengerDialogMessage _Message)
         {
             string _Key = $"SecondaryMessageStackPanel_{_Message.Id}";
 
-            var _SecondaryMessageStackPanel = m_MainControl.MessengerService.FindFrameworkElementFromKey(Container, _Key) as StackPanel;
+            var _SecondaryMessageStackPanel = FindFrameworkElementFromKey(_Container, _Key) as StackPanel;
 
             UIElement _RemovedUIElement = null;
 
@@ -48,6 +48,13 @@ namespace MessengerDialogMessagesWPF.Service
 
             _SecondaryMessageStackPanel.Children.Add(m_MainControl.Factory
                 .Create(new Factory.RequestInfo((uint)Factory.BackgroundPanelMessagesWPFElementTypes.MessageStatusFooterStackPanel, _Message)));
+        }
+        //--------------------------------------------------------------
+        public bool MessengerDialogMessageIsNotExistsInContainer(Panel _Container, int _MessengerDialogMessageId)
+        {
+            string _Key = $"SecondaryMessageStackPanel_{_MessengerDialogMessageId}";
+
+            return FindFrameworkElementFromKey(_Container, _Key) == null;
         }
         //--------------------------------------------------------------
     }

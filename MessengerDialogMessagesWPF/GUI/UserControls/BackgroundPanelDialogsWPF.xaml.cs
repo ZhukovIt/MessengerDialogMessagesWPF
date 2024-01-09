@@ -40,16 +40,26 @@ namespace MessengerDialogMessagesWPF
 
             m_Factory = new BackgroundPanelDialogsWPFFactory(Resources);
 
-            foreach (var _MessengerDialog in _MessengerDialogs)
+            if (_MessengerDialogs.Count() > 0)
             {
-                Grid _MessengerDialogGrid = (Grid)m_Factory.Create(new RequestInfo(
-                    (uint)BackgroundPanelDialogsWPFElementTypes.MessengerDialogGrid,
-                    _MessengerDialog));
+                foreach (var _MessengerDialog in _MessengerDialogs)
+                {
+                    Grid _MessengerDialogGrid = (Grid)m_Factory.Create(new RequestInfo(
+                        (uint)BackgroundPanelDialogsWPFElementTypes.MessengerDialogGrid,
+                        _MessengerDialog));
 
-                _MessengerDialogGrid.MouseDown += MessengerDialogGrid_MouseDown;
+                    _MessengerDialogGrid.MouseDown += MessengerDialogGrid_MouseDown;
 
-                spDialogs.Children.Add(_MessengerDialogGrid);
-                spDialogs.Children.Add(m_Factory.Create(new RequestInfo((uint)BackgroundPanelDialogsWPFElementTypes.DialogSeparatorGrid)));
+                    spDialogs.Children.Add(_MessengerDialogGrid);
+                    spDialogs.Children.Add(m_Factory.Create(new RequestInfo((uint)BackgroundPanelDialogsWPFElementTypes.DialogSeparatorGrid)));
+                }
+            }
+            else
+            {
+                Grid _GridEmptyMessengerDialogsProxy = (Grid)m_Factory.Create(new RequestInfo(
+                    (uint)BackgroundPanelDialogsWPFElementTypes.GridEmptyMessengerDialogsProxy));
+
+                spDialogs.Children.Add(_GridEmptyMessengerDialogsProxy);
             }
         }
         //------------------------------------------------------------------

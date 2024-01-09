@@ -92,6 +92,11 @@ namespace MessengerDialogMessagesWPF
 
                 spMessages.Children.Add(_MainMessageStackPanel);
             }
+
+            if (MainScrollViewer.ComputedVerticalScrollBarVisibility == Visibility.Visible)
+            {
+                MainScrollViewer.ScrollToEnd();
+            }
         }
         //-----------------------------------------------------------------------------------
         public void AddNewMessage(MessengerDialogMessage _Message)
@@ -106,10 +111,22 @@ namespace MessengerDialogMessagesWPF
             m_MessengerService.UpdateMessage(spMessages, _Message);
         }
         //-----------------------------------------------------------------------------------
+        public bool MessengerDialogMessageIsNotExistsInContainer(int _MessengerDialogMessageId)
+        {
+            return ((BackgroundPanelMessagesWPFService)m_MessengerService)
+                .MessengerDialogMessageIsNotExistsInContainer(spMessages, _MessengerDialogMessageId);
+        }
+        //-----------------------------------------------------------------------------------
         public void SetClientPhoto(byte[] _ImageBytes)
         {
             m_Factory.Create(new RequestInfo((uint)BackgroundPanelMessagesWPFElementTypes.CorrectDataClientPhotoEllipse,
                 _ImageBytes, ClientPhotoEllipse));
+        }
+        //-----------------------------------------------------------------------------------
+        public void SetMessengerIcon(byte[] _ImageBytes)
+        {
+            m_Factory.Create(new RequestInfo((uint)BackgroundPanelMessagesWPFElementTypes.CorrectDataMessengerIcon,
+                _ImageBytes, imgMessengerIcon));
         }
         //-----------------------------------------------------------------------------------
         private void CorrectClientData()
@@ -117,6 +134,10 @@ namespace MessengerDialogMessagesWPF
             SetClientPhoto(m_MessengerDialog.ClientPhoto);
 
             ClientNameTextBox.Text = m_MessengerDialog.ClientName;
+
+            SetMessengerIcon(m_MessengerDialog.MessengerImage);
+
+            tBlockMessengerName.Text = m_MessengerDialog.MessengerName;
         }
         //-----------------------------------------------------------------------------------
         private void SetCheckSecurityUser(CheckSecurityUserTypes _CheckSecUserType, string _SecUserName = "")
@@ -130,6 +151,7 @@ namespace MessengerDialogMessagesWPF
                     tBoxSecUserName.Foreground = new SolidColorBrush(Colors.Black);
                     tBoxMessageContent.IsEnabled = false;
                     btnSendMessage.IsEnabled = false;
+                    imgCheckSecurityUser.ToolTip = "Взять диалог в работу";
                     break;
                 case CheckSecurityUserTypes.IWorking:
                     tBoxCheckSecUser.Text = "Вы работаете с данным диалогом";
@@ -138,6 +160,7 @@ namespace MessengerDialogMessagesWPF
                     tBoxSecUserName.Foreground = new SolidColorBrush(Colors.Green);
                     tBoxMessageContent.IsEnabled = true;
                     btnSendMessage.IsEnabled = true;
+                    imgCheckSecurityUser.ToolTip = "Прекратить работу с диалогом";
                     break;
                 case CheckSecurityUserTypes.OtherWorking:
                     tBoxCheckSecUser.Text = "С диалогом работает пользователь:";
@@ -146,6 +169,7 @@ namespace MessengerDialogMessagesWPF
                     tBoxSecUserName.Foreground = new SolidColorBrush(Color.FromRgb(0xE9, 0x7C, 0x7C));
                     tBoxMessageContent.IsEnabled = false;
                     btnSendMessage.IsEnabled = false;
+                    imgCheckSecurityUser.ToolTip = "Забрать диалог для работы";
                     break;
             }
         }
